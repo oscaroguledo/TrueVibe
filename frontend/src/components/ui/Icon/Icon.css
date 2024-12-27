@@ -1,0 +1,117 @@
+/* Button Styles */
+.icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    margin: 4px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    color: black;
+}
+
+.icon:focus {
+    outline: none;
+}
+
+.icon.icon-disabled {
+    background-color: var(--button-disabled-background);
+    cursor: not-allowed;
+}
+
+.icon.icon-primary {
+    /* background-color: var(--button-background); */
+    color: white;
+}
+
+.icon.icon-primary:hover:not(.disabled) {
+    background-color: var(--button-hover-background);
+}
+.icon.icon-danger {
+    background-color: var(--danger);
+    color: white;
+}
+
+.icon.icon-danger:hover:not(.disabled) {
+    background-color: var(--danger-light);
+    color: black;
+}
+.icon.icon-success {
+    background-color: var(--success);
+    color: white;
+}
+
+.icon.icon-success:hover:not(.disabled) {
+    background-color: var(--success-light);
+    color: black;
+}
+.icon.icon-warning {
+    background-color: var(--warning);
+    color: black;
+}
+
+.icon.icon-warning:hover:not(.disabled) {
+    background-color: var(--warning-light);
+    color: black;
+}
+.icon.icon-notification {
+    background-color: var(--notification);
+    color: white;
+}
+
+.icon.icon-notification:hover:not(.disabled) {
+    background-color: var(--notification-light);
+    color: black;
+}
+
+/* Apply styles to different button sizes */
+
+/* XSmall button */
+.icon-xsmall {
+    font-size: var(--font-size-xsmall);
+    padding: var(--padding-xsmall);
+}
+
+/* Small button */
+.icon-small {
+    font-size: var(--font-size-small);
+    padding: var(--padding-small);
+}
+
+/* Medium button */
+.icon-medium {
+    font-size: var(--font-size-medium);
+    padding: var(--padding-medium);
+}
+
+/* Large button */
+.icon-large {
+    font-size: var(--font-size-large);
+    padding: var(--padding-large);
+}
+
+/* XLarge button */
+.icon-xlarge {
+    font-size: var(--font-size-xlarge);
+    padding: var(--padding-xlarge);
+}
+
+/* 2XL button */
+.icon-2xl {
+    font-size: var(--font-size-2xl);
+    padding: var(--padding-2xl);
+}
+
+/* 3XL button */
+.icon-3xl {
+    font-size: var(--font-size-3xl);
+    padding: var(--padding-3xl);
+}
+
+
+
+

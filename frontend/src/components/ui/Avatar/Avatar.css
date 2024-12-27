@@ -1,0 +1,17 @@
+/* Avatar.css */
+.avatar-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Ensure the content doesn't overflow the avatar shape */
+    box-sizing: border-box; /* Include padding/border in element's total width/height */
+  }
+  
+  .avatar-container img,
+  .avatar-container video {
+    object-fit: cover; /* Ensures that the image/video is fully contained within the avatar */
+    width: 100%;
+    height: 100%;
+  }
+  

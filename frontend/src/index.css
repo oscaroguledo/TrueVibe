@@ -1,0 +1,164 @@
+
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code, text {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', 'Arial', Helvetica, monospace;
+  font-style: normal;
+}
+
+/* Light Theme (Default) */
+:root {
+    /* Primary Purple Colors */
+    --primary-purple: #6a3dff; /* Main purple color */
+    --secondary-purple: #b77bff; /* Lighter purple for accents */
+
+    /* Danger Colors */
+    --danger: #dc3545;             /* Red color for danger */
+    --danger-light: #f8d7da;       /* Light background color for danger */
+    --danger-dark: #c82333;        /* Darker variant for danger */
+
+    /* Success Colors */
+    --success: #198754;            /* Green color for success */
+    --success-light: #d4edda;      /* Light background color for success */
+    --success-dark: #155724;       /* Darker variant for success */
+
+    /* Warning Colors */
+    --warning: #ffc107;            /* Yellow color for warning */
+    --warning-light: #fff3cd;      /* Light background color for warning */
+    --warning-dark: #856404;       /* Darker variant for warning */
+
+    /* Notification Colors */
+    --notification: #17a2b8;       /* Blue color for notifications */
+    --notification-light: #d1ecf1; /* Light background color for notification */
+    --notification-dark: #117a8b;  /* Darker variant for notification */
+    
+    /* Background Colors */
+    --background-color-light: #f8f8f8; /* Light background color */
+    --background-color-dark: #1c1c1c;  /* Dark background color */
+    --alt-background-color: #eaeaea;  /* Alternative background color */
+    
+    /* Text Colors */
+    --primary-text-color: #333333; /* Dark text for readability */
+    --secondary-text-color: #4f4f4f; /* Slightly lighter text color */
+    --muted-text-color: #aaaaaa; /* Muted text for timestamps, etc. */
+    --white-text: #ffffff; /* White text for dark backgrounds */
+
+    /* Button Colors */
+    --button-background: var(--primary-purple); /* Button background */
+    --button-hover-background: #5928cc0b; /* Hover effect */
+    --button-text-color: #ffffff; /* Text color on button */
+    --button-disabled-background: #d1d1d1; /* Disabled button color */
+
+    /* Icon Colors */
+    --icon-color: #ffffff; /* White icons on purple background */
+    --icon-hover-color: #b77bff; /* Hover color for icons */
+
+    /* Borders */
+    --border-color: #dcdcdc; /* Border color */
+    --border-radius: 8px; /* Rounded corners */
+    
+    /* Status Bar & Navigation */
+    --status-bar-color: #4b2a8d; /* Darker purple for status bar */
+    --navigation-bar-color: #5828cc; /* Purple navigation bar */
+
+    /* Font Sizes */
+    --font-size-xsmall: 12px;
+    --font-size-small: 14px;
+    --font-size-medium: 16px;
+    --font-size-large: 18px;
+    --font-size-xlarge: 20px;
+    --font-size-2xl: 24px;
+    --font-size-3xl: 30px;
+
+    /* Padding */
+    --padding-xsmall: 6px 12px;
+    --padding-small: 8px 16px;
+    --padding-medium: 10px 20px;
+    --padding-large: 12px 24px;
+    --padding-xlarge: 14px 28px;
+    --padding-2xl: 16px 32px;
+    --padding-3xl: 18px 36px;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+    --primary-purple: #6a3dff; /* Same primary purple for dark mode */
+    --secondary-purple: #b77bff; /* Lighter purple for accents in dark mode */
+    
+    /* Danger Colors */
+    --danger: #dc3545;             /* Red color for danger */
+    --danger-light: #f8d7da;       /* Light background color for danger */
+    --danger-dark: #c82333;        /* Darker variant for danger */
+
+    /* Success Colors */
+    --success: #198754;            /* Green color for success */
+    --success-light: #d4edda;      /* Light background color for success */
+    --success-dark: #155724;       /* Darker variant for success */
+
+    /* Warning Colors */
+    --warning: #ffc107;            /* Yellow color for warning */
+    --warning-light: #fff3cd;      /* Light background color for warning */
+    --warning-dark: #856404;       /* Darker variant for warning */
+
+    /* Notification Colors */
+    --notification: #17a2b8;       /* Blue color for notifications */
+    --notification-light: #d1ecf1; /* Light background color for notification */
+    --notification-dark: #117a8b;  /* Darker variant for notification */
+    
+    /* Background Colors */
+    --background-color-light: #2a2a2a; /* Darker background for dark mode */
+    --background-color-dark: #1c1c1c;  /* Dark background */
+    --alt-background-color: #333333; /* Darker alternative background */
+
+    /* Text Colors */
+    --primary-text-color: #ffffff; /* White text for dark mode */
+    --secondary-text-color: #bbbbbb; /* Lighter gray text for readability */
+    --muted-text-color: #666666; /* Muted text for dark mode */
+    --white-text: #ffffff; /* White text */
+
+    /* Button Colors */
+    --button-background: var(--primary-purple); /* Primary button color */
+    --button-hover-background: #5828cc; /* Hover effect for buttons */
+    --button-text-color: #ffffff; /* White text on buttons */
+    --button-disabled-background: #7a7a7a; /* Disabled button color in dark mode */
+
+    /* Icon Colors */
+    --icon-color: #ffffff; /* White icons */
+    --icon-hover-color: #b77bff; /* Hover color for icons */
+
+    /* Borders */
+    --border-color: #444444; /* Darker border color */
+    --border-radius: 8px; /* Rounded corners for dark mode */
+    
+    /* Status Bar & Navigation */
+    --status-bar-color: #4b2a8d; /* Dark purple for status bar */
+    --navigation-bar-color: #5828cc; /* Purple navigation bar in dark mode */
+
+    /* Font Sizes */
+    --font-size-xsmall: 12px;
+    --font-size-small: 14px;
+    --font-size-medium: 16px;
+    --font-size-large: 18px;
+    --font-size-xlarge: 20px;
+    --font-size-2xl: 24px;
+    --font-size-3xl: 30px;
+
+    /* Padding */
+    --padding-xsmall: 6px 12px;
+    --padding-small: 8px 16px;
+    --padding-medium: 10px 20px;
+    --padding-large: 12px 24px;
+    --padding-xlarge: 14px 28px;
+    --padding-2xl: 16px 32px;
+    --padding-3xl: 18px 36px;
+}
+

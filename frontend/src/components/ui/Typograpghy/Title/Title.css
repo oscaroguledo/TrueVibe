@@ -1,0 +1,37 @@
+.title {
+    font-family: 'Arial', sans-serif;
+  }
+  .title-small {
+    font-weight: 300;
+  }
+  .title-normal {
+    font-weight: 400;
+  }
+  
+  .title-bold {
+    font-weight: 500;
+  }
+  .title-xbold {
+    font-weight: 600;
+  }
+  .title-2xbold {
+    font-weight: 700;
+  }
+  
+  .title-3xbold {
+    font-weight: 800;
+  }
+  
+  
+  .title-align-left {
+    text-align: left;
+  }
+  
+  .title-align-center {
+    text-align: center;
+  }
+  
+  .title-align-right {
+    text-align: right;
+  }
+  
