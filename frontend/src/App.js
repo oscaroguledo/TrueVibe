@@ -9,10 +9,10 @@ import useDeviceType from './hooks/useDeviceType';
 import Message from './Pages/Message/Message';
 
 function App() {
+  const user = {firstname:'Oscar', lastname:'Oguledo', img:'',loggedin:true};
   const {isMobile,isTablet} =useDeviceType();
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  
   const [currentRoom, setCurrentRoom] = useState({ icon: 'fa-user', text: 'Profiles' });
   const [name, setName] = useState(null);
   const [socket, setSocket] = useState(null);
@@ -80,11 +80,14 @@ function App() {
 
   return (
     <div className="App">
+      {/* Close Button */}
+      
       {/* Sidebar component */}
       <Sidebar
           rooms={rooms}
           currentRoom={currentRoom.text}
           onEnterRoom={(room) => {setCurrentRoom(room)}}
+          user={user}
         />
         
         {/* Main Chat Section */}

@@ -1,130 +1,24 @@
-/* Button Styles */
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 20px;
-    margin: 4px;
-    font-size: 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: center;
-    color: black;
-}
 
-.btn:focus {
-    outline: none;
+.ant-btn {
+    /* color: var(--primary-purple) !important; */
+    font-size: var(--font-size-medium) !important;
+    border-color: var(--primary-purple) !important;
+    align-items: center !important;
+  }
+.ant-btn-filled {
+    background-color: var(--primary-purple) !important;
 }
-
-.btn.btn-disabled {
-    background-color: var(--button-disabled-background);
-    cursor: not-allowed;
+.ant-btn-outlined { 
+    background-color: transparent !important;
 }
-
-.btn.btn-primary {
-    background-color: var(--button-background);
-    color: white;
-}
-
-.btn.btn-primary:hover:not(.disabled) {
-    background-color: var(--button-hover-background);
-}
-.btn.btn-danger {
-    background-color: var(--danger);
-    color: white;
-}
-
-.btn.btn-danger:hover:not(.disabled) {
-    background-color: var(--danger-light);
-    color: black;
-}
-.btn.btn-success {
-    background-color: var(--success);
-    color: white;
-}
-
-.btn.btn-success:hover:not(.disabled) {
-    background-color: var(--success-light);
-    color: black;
-}
-.btn.btn-warning {
-    background-color: var(--warning);
-    color: black;
-}
-
-.btn.btn-warning:hover:not(.disabled) {
-    background-color: var(--warning-light);
-    color: black;
-}
-.btn.btn-notification {
-    background-color: var(--notification);
-    color: white;
-}
-
-.btn.btn-primary:hover:not(.disabled) {
-    background-color: var(--notification-light);
-    color: black;
-}
-
-.btn .btn-icon-left {
+.ant-btn :hover ,
+.ant-btn-icon :hover ,
+.ant-btn:hover .ant-btn-icon {
+    color: var(--primary-purple) !important;
     
+  }
+
+.ant-btn .ant-typography,
+.ant-btn .ant-typography :hover {
+    color:black !important
 }
-
-.btn .btn-icon-right {
-    
-}
-.btn .btn-text {
-    display: inline-block;
-    margin-right: 8px;
-    margin-left: 8px;
-}
-
-/* Apply styles to different button sizes */
-
-/* XSmall button */
-.btn-xsmall {
-    font-size: var(--font-size-xsmall);
-    padding: var(--padding-xsmall);
-}
-
-/* Small button */
-.btn-small {
-    font-size: var(--font-size-small);
-    padding: var(--padding-small);
-}
-
-/* Medium button */
-.btn-medium {
-    font-size: var(--font-size-medium);
-    padding: var(--padding-medium);
-}
-
-/* Large button */
-.btn-large {
-    font-size: var(--font-size-large);
-    padding: var(--padding-large);
-}
-
-/* XLarge button */
-.btn-xlarge {
-    font-size: var(--font-size-xlarge);
-    padding: var(--padding-xlarge);
-}
-
-/* 2XL button */
-.btn-2xl {
-    font-size: var(--font-size-2xl);
-    padding: var(--padding-2xl);
-}
-
-/* 3XL button */
-.btn-3xl {
-    font-size: var(--font-size-3xl);
-    padding: var(--padding-3xl);
-}
-
-
-
-

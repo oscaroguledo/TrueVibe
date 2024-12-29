@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import 'antd/dist/reset.css';
+
 import './assets/fontawesome/css/all.css';
 import './index.css'
 import App from './App';

@@ -8,11 +8,13 @@ html, body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: all 1.3s ease !important; /* Smooth transition when anything changes */
 }
 
 code, text {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', 'Arial', Helvetica, monospace;
   font-style: normal;
+  transition: all 1.3s ease !important; /* Smooth transition when anything changes */
 }
 
 /* Light Theme (Default) */
@@ -71,13 +73,12 @@ code, text {
     --navigation-bar-color: #5828cc; /* Purple navigation bar */
 
     /* Font Sizes */
-    --font-size-xsmall: 12px;
+    --font-size-xsmall: 10px;
     --font-size-small: 14px;
-    --font-size-medium: 16px;
-    --font-size-large: 18px;
-    --font-size-xlarge: 20px;
-    --font-size-2xl: 24px;
-    --font-size-3xl: 30px;
+    --font-size-medium: 18px;
+    --font-size-large: 22px;
+    --font-size-xlarge: 26px;
+    --font-size-2xl: 30px;
 
     /* Padding */
     --padding-xsmall: 6px 12px;
@@ -144,13 +145,12 @@ code, text {
     --navigation-bar-color: #5828cc; /* Purple navigation bar in dark mode */
 
     /* Font Sizes */
-    --font-size-xsmall: 12px;
+    --font-size-xsmall: 10px;
     --font-size-small: 14px;
-    --font-size-medium: 16px;
-    --font-size-large: 18px;
-    --font-size-xlarge: 20px;
-    --font-size-2xl: 24px;
-    --font-size-3xl: 30px;
+    --font-size-medium: 18px;
+    --font-size-large: 22px;
+    --font-size-xlarge: 26px;
+    --font-size-2xl: 30px;
 
     /* Padding */
     --padding-xsmall: 6px 12px;

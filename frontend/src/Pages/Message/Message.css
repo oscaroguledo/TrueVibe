@@ -8,7 +8,7 @@
   .messages-channels-section{
     width: 200px; /* Example fixed width */
     background-color: #f4a261; /* Example color */
-    text-align: center;
+    padding: 20px;
     
   }
   .messages-profile-section {
@@ -43,8 +43,8 @@
   }
   
   .channel-item {
-    margin-top: 24px;
-    margin-bottom: 15px;
+    /* margin-top: 24px;
+    margin-bottom: 15px; */
   }
   
   .channel-item h3 {

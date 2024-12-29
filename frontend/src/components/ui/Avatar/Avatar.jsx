@@ -23,7 +23,12 @@ const Avatar = ({ src, alt, type, shape, size, border }) => {
         />
       );
     }
-    return <img src={src} alt={alt} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />;
+    if (type === 'image') {
+      return (
+        <img src={src} alt={alt} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+      );
+    }
+    return <span alt={alt} style={{ width: '100%', height: '100%', objectFit: 'cover' }}> {src}</span>;
   };
 
   return (

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Button from '../../components/ui/Button/Button'; // Ensure your Button component is imported
 import './Message.css';
 import Header from "../../components/ui/Header/Header";
+import Accordion from "../../components/ui/Accordion/Accordion";
 const Message = ({ socket, messages, isMobile, isTablet }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [input, setInput] = useState("");
@@ -19,14 +20,19 @@ const Message = ({ socket, messages, isMobile, isTablet }) => {
                         onClick={() => setSidebarOpen(!sidebarOpen)} 
                         className={`fa-thin fa-xmark open-btn ${sidebarOpen ? "open-btn-open" : ""}`}
                       />;
-
+  const items = [
+    { prefix: 'P1', name: 'Item Name 1', suffix: 'Suffix 1' },
+    { prefix: 'P2', name: 'Item Name 2', suffix: 'Suffix 2' },
+    { prefix: 'P3', name: 'Item Name 3', suffix: 'Suffix 3' },
+  ];
 
   return (
     <div className="message-container">
         <div className="messages-channels-section">
           <div className="channel-item">
-            <h3>Chats</h3>
-            <p>View all your messages and ongoing conversations.</p>
+          
+
+              <Accordion title="Accordion Title" suffix="Panel Suffix" items={items} />
           </div>
 
           <div className="channel-item">

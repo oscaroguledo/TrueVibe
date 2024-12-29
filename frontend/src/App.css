@@ -31,4 +31,11 @@ input[type="text"] {
   padding-left: 50px;
 }
 
+.ant-tooltip {
+  visibility:hidden !important;
+  left: 100px !important;
+}
+.ant-tooltip-inner  .ant-typography{
+  color:red !important;
+}
 

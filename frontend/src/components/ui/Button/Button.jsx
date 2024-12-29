@@ -1,61 +1,54 @@
-import PropTypes from 'prop-types';  // Import PropTypes
+import React from 'react';
+import PropTypes from 'prop-types'; // Import PropTypes for validation
+import { Button as CustomButton } from 'antd';
+import Icon from '../Icon/Icon';  // Assuming you have a custom Icon component for icons
 import './Button.css';
-
-const Button = ({ 
-  type = 'button', 
-  icon, 
-  text, 
-  iconPosition = 'left', 
-  onClick, 
-  disabled = false, 
-  size = 'medium', 
-  color = 'primary' ,
-  className,
-  style
+const Button = ({
+  icon,
+  text,
+  type,
+  variant,
+  border,
+  onClick,
+  children,
+  ...props
 }) => {
+  const buttonStyle = {
+    border: border, // Default border if not provided
+  };
+  const className = `${props.className} ant-btn-${variant}`
+
   return (
-    <button 
-      type={type} 
-      className={`btn btn-${size} btn-${color} btn-${disabled ? 'disabled' : ''} ${className}`} 
-      onClick={onClick} 
-      disabled={disabled}
-      style={style}
+    <CustomButton
+      type={type} // Default button type
+      variant={variant}
+      onClick={onClick}
+      style={buttonStyle}
+      className={className }
+      icon={icon ? <Icon name={icon} /> : null} // Render icon if `icon` prop is provided
+      {...props}
     >
-      {icon && iconPosition === 'left' && (
-        <span className="btn-icon-left">
-          <i className={`fa-light ${icon}`}></i>
-        </span>
-      )}
-      {text && <span className="btn-text">{text}</span>}
-      {icon && iconPosition === 'right' && (
-        <span className="btn-icon-right">
-          <i className={`fa-thin ${icon}`}></i>
-        </span>
-      )}
-    </button>
+      {children?children:<>{text && text}</>}
+    </CustomButton>
   );
 };
 
-// Define prop types
+// Define PropTypes for validation
 Button.propTypes = {
-  type: PropTypes.oneOf(['button', 'submit', 'reset']),  // Ensuring valid values for the 'type' prop
-  icon: PropTypes.string,  // icon is a string (class name for FontAwesome icon)
-  text: PropTypes.string,  // text is a string
-  className: PropTypes.string,
-  iconPosition: PropTypes.oneOf(['left', 'right']),  // iconPosition can either be 'left' or 'right'
-  onClick: PropTypes.func.isRequired,  // onClick should be a function (required)
-  disabled: PropTypes.bool,  // disabled is a boolean
-  size: PropTypes.oneOf(['xsmall', 'small', 'medium', 'large', 'xlarge', '2xl', '3xl']),  // size must be one of these values
-  color: PropTypes.oneOf(['primary', 'secondary', 'danger', 'success', 'warning','']),  // color must be one of these values
+  icon: PropTypes.string,         // Expecting icon name as a string
+  text: PropTypes.string,          // Text for the button
+  type: PropTypes.oneOf(['default', 'primary','ghost', 'dashed', 'link']),  // Button type
+  variant : PropTypes.oneOf(['filled', 'outlined']),  // Button type
+  border: PropTypes.string,       // Custom border style
+  onClick: PropTypes.func,         // onClick event handler
 };
 
-// Default props if no value is provided
 Button.defaultProps = {
-  iconPosition: 'left',
-  disabled: false,
-  size: 'medium',
-  color: 'primary',
-  type: 'button',  // Default to 'button' for the type prop
+  icon: null,
+  text: '',           // Default text is empty if not provided
+  type: 'default',    // Default button type
+  variant:'outlined',
+  onClick: () => {},   // Default onClick as an empty function
 };
 
 export default Button;

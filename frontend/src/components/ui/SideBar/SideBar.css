@@ -1,120 +1,143 @@
 /* Sidebar Styles */
-/* Sidebar container */
-/* .sidebarcontainer{
-    width: fit-content;
-    display: flex;
-    flex: row;
-    
-} */
 .sidebar {
   position: fixed;
   top: 0;
   left: 0;
-  width: 70px; /* Initially, the width is 0 (closed) */
+  width: 78px; /* Initially, the width is 78px when closed */
   height: 100%;
   background-color: var(--background-color-light);
   padding: 8px;
-  z-index: 10;
+  z-index: 10000;
   overflow-x: hidden; /* Prevent horizontal overflow when sidebar is closed */
-  transition: width 0.3s ease; /* Smooth transition when width changes */
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* This ensures the footer stays at the bottom */
 }
 
 /* Sidebar opened state */
 .sidebar-open {
   width: 250px; /* When open, the width is 250px */
 }
-  
-  .sidebar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: black;
-    margin: auto;
-    margin-bottom: 40px;
-    padding: auto;
-  }
-  /* Sidebar footer styles */
-.sidebar-footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    text-align: center;
-    transition: width 0.3s ease; /* Smooth transition when width changes */
-    width: 70px;
-    margin: auto;
-    padding: 8px; /* Add some padding */
-    color: black;
-}
-.sidebar-footer-open {
-    width: 242px; /* When open, the width is 250px */
-}
-  
-  .sidebar-footer-name{
-      margin-left: 16px;
-  }
-  /* Close button styles */
-.close-btn {
-  position: absolute; /* Absolutely positioned relative to the sidebar */
-  top: 12px; /* 10px from the top of the sidebar */
-  left: 84px; /* 10px from the right edge of the sidebar */
-  cursor: pointer;
-  z-index: 10;
-  font-size: 20px; /* Adjust size as needed */
-  transition: right 0.3s ease; /* Smooth transition for button movement */
-  transition: left 0.3s ease; /* Smooth transition for button movement */
-  background-color: var(--background-color-light);
-  padding: 8px;
-  padding-left: 4px;
-  color: black;
-  border-top-right-radius: 50%;
-  border-bottom-right-radius: 50%;
-  font-weight: 300;
-}
-.close-btn-open {
-  left: 264px; /* When open, the width is 250px */
-  transition: right 0.3s ease; /* Smooth transition for button movement */
-  transition: left 0.3s ease; /* Smooth transition for button movement */
-} 
-  .room-list {
-    padding: 0;
-    display: flex; /* Use flexbox to arrange children horizontally (row direction) */
-    flex-direction: column; /* This sets the direction of items to be horizontal */
-    align-items:flex-start;
-  }
-  
-  .room-item {
-    cursor: pointer;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    margin: 0px;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    width: 100%;
-  }
-  
-  .room-item:hover {
-    background-color: var(--alt-background-color);
-    border-radius: var(--border-radius);
-  }
-  
-  .room-item.active {
-    background-color: var(--alt-background-color);
-    border-right: 2px solid var(--primary-purple);
 
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+  padding: 8px;
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
+}
+/* Sidebar Name Styling */
+.sidebar-header-name {
+  opacity: 1;
+  max-width: 100%;
+  white-space: nowrap; /* Prevent wrapping */
+  overflow: hidden;  /* Hide overflow */
+}
+
+.sidebar-header-name-hidden {
+  opacity: 0; /* Fade out when closed */
+  max-width: 0; /* Optionally collapse width */
+  visibility: hidden; /* Ensure the element doesn't take up space */
+}
+
+/* Room list styles */
+
+.room-list{
+  background: transparent !important;
+  border: none !important;
+}
+
+.room-item-name {
+  opacity: 1;
+  max-width: 100%;
+  white-space: nowrap; /* Prevent wrapping */
+  overflow: hidden;  /* Hide overflow */
+}
+
+.room-item-name-hidden {
+  opacity: 0; /* Fade out when closed */
+  max-width: 0; /* Optionally collapse width */
+  visibility: hidden; /* Ensure the element doesn't take up space */
+}
+.room-item:hover {
+  background-color: var(--alt-background-color);
+  border-radius: var(--border-radius);
+}
+
+.room-item-active {
+  background-color: var(--alt-background-color) !important;
+  border-right: 2px solid var(--primary-purple) !important;
+  border-bottom-right-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+}
+.sidebar-bottom{
+  margin-top: calc(100vh - 512px);
+}
+.sidebar-close-menu-name {
+  opacity: 1;
+  max-width: 100%;
+  white-space: nowrap; /* Prevent wrapping */
+  overflow: hidden;  /* Hide overflow */
+}
+
+.sidebar-close-menu-name-hidden {
+  opacity: 0; /* Fade out when closed */
+  max-width: 0; /* Optionally collapse width */
+  visibility: hidden; /* Ensure the element doesn't take up space */
+}
+
+/* Sidebar footer styles */
+.sidebar-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+  margin-top: 4px;
+  padding: 8px;
+  text-align: center;
+  border-top: 1px solid var(--border-color);
+  width: 100%;
+  
+}
+
+.sidebar-footer-name {
+  opacity: 1;
+  max-width: 100%;
+  white-space: nowrap; /* Prevent wrapping */
+  overflow: hidden;  /* Hide overflow */
+}
+
+.sidebar-footer-name-hidden {
+  opacity: 0; /* Fade out when closed */
+  max-width: 0; /* Optionally collapse width */
+  visibility: hidden; /* Ensure the element doesn't take up space */
+}
+
+/* Sidebar footer image */
+.sidebar-footer-img {
+  margin-right: 10px;
+}
+
+
+/* Mobile View */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
   }
-  
-  /* Mobile View */
-  @media (max-width: 768px) {
-    .sidebar {
-      transform: translateX(-100%);
-    }
-  
-    .sidebar-toggle {
-      display: block;
-    }
-  
-    .sidebar-open .sidebar {
-      transform: translateX(0);
-    }
+
+  .sidebar-toggle {
+    display: block;
   }
-  
+
+  .sidebar-open .sidebar {
+    transform: translateX(0);
+  }
+}
+/* Close button styles */
+.close-btn {
+  cursor: pointer;
+  z-index: 99;
+}
