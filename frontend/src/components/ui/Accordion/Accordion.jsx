@@ -1,6 +1,6 @@
 import React from 'react';
 import { Collapse, Avatar } from 'antd';
-
+import './Accordion.css'
 
 const { Panel } = Collapse;
 
@@ -10,8 +10,8 @@ const Accordion = ({ title, suffix, items }) => {
       <Panel
         header={
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>{title}</span>
-            <span>{suffix}</span>
+            <span className='accordion-title'>{title}</span>
+            <span className='accordion-title-suffix'>{suffix}</span>
           </div>
         }
         key="1"

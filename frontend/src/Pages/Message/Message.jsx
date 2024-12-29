@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import Button from '../../components/ui/Button/Button'; // Ensure your Button component is imported
+import { Typography} from "antd"; // Importing Ant Design components
 import './Message.css';
 import Header from "../../components/ui/Header/Header";
 import Accordion from "../../components/ui/Accordion/Accordion";
+const { Text,Title } = Typography;
+
 const Message = ({ socket, messages, isMobile, isTablet }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [input, setInput] = useState("");
@@ -28,11 +31,11 @@ const Message = ({ socket, messages, isMobile, isTablet }) => {
 
   return (
     <div className="message-container">
+        
         <div className="messages-channels-section">
+          <Text className="title">ChatRoom </Text>
           <div className="channel-item">
-          
-
-              <Accordion title="Accordion Title" suffix="Panel Suffix" items={items} />
+              <Accordion title="Favourites" suffix="Suffix" items={items} />
           </div>
 
           <div className="channel-item">

@@ -8,13 +8,13 @@
   .messages-channels-section{
     width: 200px; /* Example fixed width */
     background-color: #f4a261; /* Example color */
-    padding: 20px;
+    padding: 8px;
     
   }
   .messages-profile-section {
     width: 200px; /* Example fixed width */
     background-color: #e76f51; /* Example color */
-    padding: 20px;
+    padding: 8px;
     line-height: 100px; /* Center text vertically */
     transition: right 0.3s ease; /* Smooth transition for button movement */
     transition: left 0.3s ease; /* Smooth transition for button movement */
