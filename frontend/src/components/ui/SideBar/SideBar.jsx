@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Layout, Menu, Avatar, Typography,Dropdown } from "antd"; // Importing Ant Design components
 import { LogoutOutlined } from '@ant-design/icons'; // Importing Ant Design icons
 import "./SideBar.css"; // Import your custom CSS
@@ -8,46 +8,35 @@ import getLetterColor from '../../../utils/colors';
 import Button from "../Button/Button";
 const { Text } = Typography;
 
-const menu = (
-  <Menu>
-    <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
-        1st menu item
-      </a>
-    </Menu.Item>
-    <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
-        2nd menu item
-      </a>
-    </Menu.Item>
-    <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
-        3rd menu item
-      </a>
-    </Menu.Item>
-  </Menu>
-);
+
 
 const Sidebar = ({ rooms, currentRoom, onEnterRoom, ...props }) => {
   console.log(props,'===')
   const { color, backgroundColor } = getLetterColor(props.user.firstname[0]||props.user.name[0]||'O');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentmenuitem, setCurrentMenuItem] = useState(currentRoom?.text || rooms[0].text);
-  const [modalVisible, setModalVisible] = useState(false);
-
-  // Define the Menu for the Dropdown
-  const menuItems = (
-    <Menu>
-      <Menu.Item key="1">Item 1</Menu.Item>
-      <Menu.Item key="2">Item 2</Menu.Item>
-      <Menu.Item key="3">Item 3</Menu.Item>
-    </Menu>
-  );
-
+  // Create a reference to the sidebar element
+  const sidebarRef = useRef(null);
   const clickMenuItem =(key) =>{
     onEnterRoom(rooms.find(room => room.text === key));
     setCurrentMenuItem(key);
   }
+  // Close sidebar if clicked outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setSidebarOpen(false); // Close the sidebar when clicked outside
+      }
+    };
+
+    // Adding the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -57,7 +46,7 @@ const Sidebar = ({ rooms, currentRoom, onEnterRoom, ...props }) => {
         // collapsible
         collapsed={!sidebarOpen}
         onCollapse={() => setSidebarOpen(!sidebarOpen)}
-        
+        ref={sidebarRef}  // Attach ref to Sider
         theme="light"
       >
         
@@ -104,7 +93,7 @@ const Sidebar = ({ rooms, currentRoom, onEnterRoom, ...props }) => {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width:'100%'}}>
                   <Button icon={!sidebarOpen?'fa-bars':'fa-xmark'} border={'none'} onClick={() => setSidebarOpen(!sidebarOpen)}>
                     <Text className={`sidebar-close-menu-name ${!sidebarOpen?'sidebar-close-menu-name-hidden':''}`} strong
-                      >elele</Text>
+                      >{!sidebarOpen?'show':'hide'}</Text>
                     </Button>
               </div>
           </div>

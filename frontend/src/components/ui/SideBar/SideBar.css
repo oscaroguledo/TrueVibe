@@ -13,11 +13,13 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between; /* This ensures the footer stays at the bottom */
+  
 }
 
 /* Sidebar opened state */
 .sidebar-open {
   width: 250px; /* When open, the width is 250px */
+  box-shadow: 4px 0px 15px rgba(0, 0, 0, 0.2);
 }
 
 .sidebar-header {
@@ -74,7 +76,8 @@
   border-top-right-radius: 0px !important;
 }
 .sidebar-bottom{
-  margin-top: calc(100vh - 512px);
+  position: absolute;
+  bottom: 0px;
 }
 .sidebar-close-menu-name {
   opacity: 1;
@@ -100,6 +103,7 @@
   text-align: center;
   border-top: 1px solid var(--border-color);
   width: 100%;
+  
   
 }
 
