@@ -10,7 +10,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 78px; /* Initially, the width is 0 (closed) */
+  width: 70px; /* Initially, the width is 0 (closed) */
   height: 100%;
   background-color: var(--background-color-light);
   padding: 8px;
@@ -56,7 +56,7 @@
 .close-btn {
   position: absolute; /* Absolutely positioned relative to the sidebar */
   top: 12px; /* 10px from the top of the sidebar */
-  left: 76px; /* 10px from the right edge of the sidebar */
+  left: 84px; /* 10px from the right edge of the sidebar */
   cursor: pointer;
   z-index: 10;
   font-size: 20px; /* Adjust size as needed */
@@ -71,7 +71,7 @@
   font-weight: 300;
 }
 .close-btn-open {
-  left: 250px; /* When open, the width is 250px */
+  left: 264px; /* When open, the width is 250px */
   transition: right 0.3s ease; /* Smooth transition for button movement */
   transition: left 0.3s ease; /* Smooth transition for button movement */
 } 
@@ -94,6 +94,7 @@
   
   .room-item:hover {
     background-color: var(--alt-background-color);
+    border-radius: var(--border-radius);
   }
   
   .room-item.active {

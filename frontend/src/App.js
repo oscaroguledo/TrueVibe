@@ -46,16 +46,17 @@ function App() {
       socket.on("message", (msg) => {
         console.log("Message received", msg);
         msg.date = new Date(msg.date);
-        setMessages((messages) => [ msg,...messages]);
+        setMessages((messages) => [ ...messages,msg]);
       });
   
-      socket.on("messages", (msgs) => {
-        console.log("Messages received", msgs);
-        let messages = msgs.messages.map((msg) => {
-          msg.date = new Date(msg.date);
-          return msg;
-        });
-        setMessages(messages);
+      socket.on("messages", (msg) => {
+        console.log("Messages received", msg);
+        // let messages = msgs.messages.map((msg) => {
+        //   msg.date = new Date(msg.date);
+        //   return msg;
+        // });
+        // setMessages(messages);
+        setMessages((messages) => [  ...messages,msg]);
       });
     }, []);
 
@@ -79,9 +80,8 @@ function App() {
 
   return (
     <div className="App">
-      <main className="h-screen w-screen flex text-ctp-text">
-        {/* Sidebar component */}
-        <Sidebar
+      {/* Sidebar component */}
+      <Sidebar
           rooms={rooms}
           currentRoom={currentRoom.text}
           onEnterRoom={(room) => {setCurrentRoom(room)}}
@@ -92,17 +92,16 @@ function App() {
           {/* Mobile Sidebar Toggle Button */}
           
           
-          {/* Chat Header */}
+          {/* Chat Header
           <div className="chat-header">
             <h1>{currentRoom.text}</h1>
-          </div>
+          </div> */}
 
           {/* messages */}
           {currentRoom.text === 'Chats'?
           <Message socket={socket} messages={messages} isMobile={isMobile} isTablet={isTablet} />
           :null}
         </div>
-      </main>
     </div>
   );
 }

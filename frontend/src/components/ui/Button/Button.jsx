@@ -23,7 +23,7 @@ const Button = ({
     >
       {icon && iconPosition === 'left' && (
         <span className="btn-icon-left">
-          <i className={`fa-thin ${icon}`}></i>
+          <i className={`fa-light ${icon}`}></i>
         </span>
       )}
       {text && <span className="btn-text">{text}</span>}

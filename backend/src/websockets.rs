@@ -16,16 +16,24 @@ pub async fn on_connect(socket: SocketRef) {
     // Handle the "join" event (client joining a room)
     socket.on(
         "join",
-        |socket: SocketRef, Data::<String>(room), store: State<MessageStore>| async move {
+        // |socket: SocketRef, Data::<String>(room), store: State<MessageStore>| async move {
+        |socket: SocketRef, Data::<String>(room)| async move {
             info!("Received join: {:?}", room);
 
             // Leave all rooms and join the specified room
-            let _ = socket.leave_all();
+            // let _ = socket.leave_all();
             let _ = socket.join(room.clone());
 
             // Fetch messages for the room and send them to the client
-            let messages = store.get(&room).await;
-            let _ = socket.emit("messages", Messages { messages });
+            // let messages = store.get(&room).await;
+            // let _ = socket.emit("messages", Messages { messages });
+
+
+            // Format the message
+            let message = format!("just joined: {:?}", room);
+            
+            // Emit the message to the client
+            let _ = socket.emit("messages", message);
         },
     );
 
@@ -43,7 +51,7 @@ pub async fn on_connect(socket: SocketRef) {
             };
 
             // Store the message in the MessageStore
-            store.insert(&data.room, response.clone()).await;
+            // store.insert(&data.room, response.clone()).await;
 
             // Broadcast the message to all clients in the room
             let _ = socket.within(data.room).emit("message", response);

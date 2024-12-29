@@ -12,7 +12,7 @@ const Icon = ({
 }) => {
   return (
     <i
-      className={`icon icon-${size} icon-${color} ${className} fa-thin ${name} `}
+      className={`icon icon-${size} icon-${color} ${className} fa-light ${name} `}
       onClick={onClick} style={style}
     />
   );
