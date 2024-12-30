@@ -78,6 +78,7 @@
 .sidebar-bottom{
   position: absolute;
   bottom: 0px;
+  background-color: var(--background-color-light);
 }
 .sidebar-close-menu-name {
   opacity: 1;

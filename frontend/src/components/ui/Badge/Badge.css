@@ -1,0 +1,32 @@
+.suffix-badge,
+.suffix-badge-not-exceed {
+    color: var(--muted-text-color);
+    border-radius: 80px !important;
+    padding: var(--padding-medium);
+    background-color: var(--notification-light);
+    width: auto; /* Let the width grow based on content */
+    height: auto; /* Let the height grow based on content */
+    min-width: 20px; /* Set a minimum size to ensure it doesn't get too small */
+    min-height: 20px; /* Set a minimum size to ensure it doesn't get too small */
+    display: inline-flex; /* Ensure the content is aligned properly */
+    justify-content: center; /* Center the content horizontally */
+    align-items: center; /* Center the content vertically */
+    transition: all 1.3s ease-in-out; /* Smooth transition for width, height, and border-radius */
+  }
+  .suffix-badge-exceed {
+    background-color: var(--danger-light) !important;
+    color: black;
+  }
+  .suffix-badge-small {
+    font-size: calc(var(--font-size-small) - 6px) !important;
+    padding: var(--padding-small) !important;
+  }
+  .suffix-badge-default {
+    font-size: calc(var(--font-size-medium) - 6px) !important;
+    padding: var(--padding-medium) !important;
+  }
+  .suffix-badge-large {
+    font-size: calc(var(--font-size-large) - 6px) !important;
+    padding: var(--padding-large) !important;
+  }
+ 

@@ -8,6 +8,7 @@
     outline: none !important;
 }
 
+
 .icon.icon-disabled {
     background-color: var(--button-disabled-background) !important;
     cursor: not-allowed !important;
@@ -60,11 +61,6 @@
 
 /* Apply styles to different button sizes */
 
-/* XSmall button */
-.icon-xsmall {
-    font-size: var(--font-size-xsmall);
-    padding: var(--padding-xsmall);
-}
 
 /* Small button */
 .icon-small {
@@ -73,7 +69,7 @@
 }
 
 /* Medium button */
-.icon-medium {
+.icon-default {
     font-size: var(--font-size-medium);
     padding: var(--padding-medium);
 }
@@ -82,24 +78,6 @@
 .icon-large {
     font-size: var(--font-size-large);
     padding: var(--padding-large);
-}
-
-/* XLarge button */
-.icon-xlarge {
-    font-size: var(--font-size-xlarge);
-    padding: var(--padding-xlarge);
-}
-
-/* 2XL button */
-.icon-2xl {
-    font-size: var(--font-size-2xl);
-    padding: var(--padding-2xl);
-}
-
-/* 3XL button */
-.icon-3xl {
-    font-size: var(--font-size-3xl);
-    padding: var(--padding-3xl);
 }
 
 

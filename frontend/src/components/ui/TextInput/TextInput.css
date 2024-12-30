@@ -1,0 +1,12 @@
+.ant-input-affix-wrapper,
+.ant-input-outlined,
+.ant-input {
+    padding: 2px !important;
+    border-color: var(--border-color) !important;
+    border-radius: var(--border-radius) !important;
+    transition: var(--transition); /* Smooth transition when anything changes */
+}
+.ant-input-affix-wrapper :hover,
+.ant-input-affix-wrapper-focused {
+    border-color: var(--primary-purple) !important;
+}

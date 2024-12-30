@@ -1,0 +1,12 @@
+ 
+  .messages-channels-section{
+    background-color: var(--button-text-color); /* Example color */
+    padding: 18px;
+    height: 100%;
+    
+  }
+  .messages-channels-section-title {
+    font-weight: 600 !important;
+    font-size: var(--font-size-large) !important;
+    margin-bottom: 20px !important;
+  }

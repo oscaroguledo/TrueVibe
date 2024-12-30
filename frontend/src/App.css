@@ -1,41 +1,17 @@
 
-
-h1 {
-  font-size: 24px;
-  color: #FFF;
-}
-
-
-input[type="text"] {
-  border: 1px solid #333;
-  padding: 8px;
-  border-radius: 4px;
-  background-color: #1f1f1f;
-  color: #e0e0e0;
-}
-
 /* Main Content Area */
 .main-content {
   position: absolute; /* Absolutely positioned relative to the sidebar */
   top: 0px; /* 10px from the top of the sidebar */
   left:78px;
-  width: calc(100% - 88px); /* Subtract sidebar width from the total width */
+  width: calc(100% - 78px); /* Subtract sidebar width from the total width */
   flex-grow: 1;
-  padding: 4px;
-  height: calc(100% - 18px);
-}
-
-/* Chat Header */
-.chat-header {
-  margin-bottom: 20px;
-  padding-left: 50px;
+  height: calc(100vh);
+  transition: all 1.3s ease-in-out !important; /* Smooth transition for width, height, and border-radius */
 }
 
 .ant-tooltip {
   visibility:hidden !important;
   left: 100px !important;
-}
-.ant-tooltip-inner  .ant-typography{
-  color:red !important;
 }
 

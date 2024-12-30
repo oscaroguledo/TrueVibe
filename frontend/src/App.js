@@ -9,7 +9,7 @@ import useDeviceType from './hooks/useDeviceType';
 import Message from './Pages/Message/Message';
 
 function App() {
-  const user = {firstname:'Oscar', lastname:'Oguledo', img:'',loggedin:true};
+  const user = {id:'23131243rceve',firstname:'Oscar', lastname:'Oguledo', img:'',loggedin:true};
   const {isMobile,isTablet} =useDeviceType();
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
@@ -60,14 +60,14 @@ function App() {
       });
     }, []);
 
-  const sendMessage = (e) => {
-    e.preventDefault();
-    socket?.emit("message", {
-      text: input,
-      room: currentRoom.text,
-    });
-    setInput("");
-  };
+  // const sendMessage = (e) => {
+  //   e.preventDefault();
+  //   socket?.emit("message", {
+  //     text: input,
+  //     room: currentRoom.text,
+  //   });
+  //   setInput("");
+  // };
   const rooms = [
     { icon: 'fa-user', text: 'Profiles' },
     { icon: 'fa-calendar', text: 'Calendar' },
@@ -102,7 +102,7 @@ function App() {
 
           {/* messages */}
           {currentRoom.text === 'Chats'?
-          <Message socket={socket} messages={messages} isMobile={isMobile} isTablet={isTablet} />
+          <Message socket={socket} messages={messages} isMobile={isMobile} isTablet={isTablet} user ={user}/>
           :null}
         </div>
     </div>

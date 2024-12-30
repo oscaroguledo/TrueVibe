@@ -37,7 +37,6 @@ const Button = ({
 Button.propTypes = {
   icon: PropTypes.string,         // Expecting icon name as a string
   text: PropTypes.string,          // Text for the button
-  type: PropTypes.oneOf(['default', 'primary','ghost', 'dashed', 'link']),  // Button type
   variant : PropTypes.oneOf(['filled', 'outlined']),  // Button type
   border: PropTypes.string,       // Custom border style
   onClick: PropTypes.func,         // onClick event handler
@@ -46,7 +45,6 @@ Button.propTypes = {
 Button.defaultProps = {
   icon: null,
   text: '',           // Default text is empty if not provided
-  type: 'default',    // Default button type
   variant:'outlined',
   onClick: () => {},   // Default onClick as an empty function
 };

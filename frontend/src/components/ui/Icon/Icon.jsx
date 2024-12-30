@@ -6,12 +6,13 @@ const Icon = ({
   name, 
   onClick,
   className,
+  size,
   style,
   props
 }) => {
   return (
     <i
-      className={`icon fa-light ${name} ${className}`}
+      className={`icon fa-light ${name} ${className} icon-${size}`}
       onClick={onClick}
       style={style?style:{}}
       {...props}

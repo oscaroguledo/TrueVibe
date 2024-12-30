@@ -6,12 +6,22 @@
   } */
   .ant-collapse,
   .ant-collapse-content  {
+    
     border: none !important;
+    width: 100% !important;
     border-radius: 2px !important;
+    background-color: transparent !important;
+    transition: all 1.3s ease-in-out !important; /* Smooth transition for width, height, and border-radius */
+    
+  }
+  .ant-collapse-content-box {
+    padding: 2px !important;
   }
   /* Hide the default icon */
-  .ant-collapse-header {
+  .ant-collapse-header,
+  .ant-collapse-header .ant-collapse-header-text {
     padding: 4px !important;
+    border-radius: 2px !important;
   }
 .ant-collapse-header .ant-collapse-expand-icon {
     display: none !important;
@@ -29,14 +39,10 @@
   
   .accordion-title {
     font-weight: 600;
-    font-size: calc(var(--font-size-small) - 2px);
+    font-size: calc(var(--font-size-small) - 3px);
     text-transform: uppercase;
     align-self: center;
-    color: var(--secondary-text-color);
-  }
-  
-  .accordion-title-suffix {
-    color: var(--secondary-text-color);
+    color: var(--muted-text-color);
   }
   
   .accordion-content {
@@ -46,29 +52,36 @@
     background-color: #fff;
   }
   
-  .accordion-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px 0;
-    border-bottom: 1px solid #eaeaea;
+  .ant-collapse .ant-collapse-item {
+    margin-top: 8px !important;
+    border-bottom: none !important;
   }
   
   .accordion-item:last-child {
     border-bottom: none;
   }
   
-  .prefix {
-    font-weight: bold;
-    color: #2a9d8f;
+  .accordion-item-img{
+    font-size: var(--font-size-small) !important;
   }
   
-  .name {
-    flex: 1;
-    text-align: center;
+  .accordion-item-name {
+    font-weight: 600;
+    font-size: calc(var(--font-size-small) - 3px);
+    align-self: center;
+    color: var(--secondary-text-color);
+    max-width: 100%;
+    white-space: nowrap; /* Prevent wrapping */
+    overflow: hidden;  /* Hide overflow */
   }
   
-  .suffix {
-    color: #e76f51;
+  .ant-list {
+
   }
+  .ant-list-item-active,
+  .ant-collapse-header-active .ant-collapse-header-text{
+    background-color: var(--secondary-purple) !important;
+    border-radius: 2px !important;
+  }
+
   

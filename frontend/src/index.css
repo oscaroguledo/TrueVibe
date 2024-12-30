@@ -19,9 +19,11 @@ code, text {
 
 /* Light Theme (Default) */
 :root {
+    --transition: all 1.3s ease !important;
     /* Primary Purple Colors */
     --primary-purple: #6a3dff; /* Main purple color */
-    --secondary-purple: #b77bff; /* Lighter purple for accents */
+    --primary-purple-rgb: 106, 61, 255; /* RGB equivalent of primary purple */
+    --secondary-purple: #f4f1ff; /* Lighter purple for accents */
 
     /* Danger Colors */
     --danger: #dc3545;             /* Red color for danger */
@@ -44,14 +46,15 @@ code, text {
     --notification-dark: #117a8b;  /* Darker variant for notification */
     
     /* Background Colors */
-    --background-color-light: #f8f8f8; /* Light background color */
+    --background-color:#ffffff ;
+    --background-color-light: #fcfcfc ;/* Light background color */
     --background-color-dark: #1c1c1c;  /* Dark background color */
     --alt-background-color: #eaeaea;  /* Alternative background color */
     
     /* Text Colors */
     --primary-text-color: #333333; /* Dark text for readability */
     --secondary-text-color: #4f4f4f; /* Slightly lighter text color */
-    --muted-text-color: #aaaaaa; /* Muted text for timestamps, etc. */
+    --muted-text-color: #6c757d; /* Muted text for timestamps, etc. */
     --white-text: #ffffff; /* White text for dark backgrounds */
 
     /* Button Colors */
@@ -60,6 +63,7 @@ code, text {
     --button-text-color: #ffffff; /* Text color on button */
     --button-disabled-background: #d1d1d1; /* Disabled button color */
 
+    
     /* Icon Colors */
     --icon-color: #ffffff; /* White icons on purple background */
     --icon-hover-color: #b77bff; /* Hover color for icons */
@@ -73,27 +77,21 @@ code, text {
     --navigation-bar-color: #5828cc; /* Purple navigation bar */
 
     /* Font Sizes */
-    --font-size-xsmall: 10px;
     --font-size-small: 14px;
     --font-size-medium: 18px;
     --font-size-large: 22px;
-    --font-size-xlarge: 26px;
-    --font-size-2xl: 30px;
 
     /* Padding */
-    --padding-xsmall: 6px 12px;
-    --padding-small: 8px 16px;
-    --padding-medium: 10px 20px;
-    --padding-large: 12px 24px;
-    --padding-xlarge: 14px 28px;
-    --padding-2xl: 16px 32px;
-    --padding-3xl: 18px 36px;
+    --padding-small: 2px 4px;
+    --padding-medium: 4px 6px;
+    --padding-large: 6px 8px;
 }
 
 /* Dark Theme */
 [data-theme="dark"] {
     --primary-purple: #6a3dff; /* Same primary purple for dark mode */
-    --secondary-purple: #b77bff; /* Lighter purple for accents in dark mode */
+    --primary-purple-rgb: 106, 61, 255; /* RGB equivalent of primary purple */
+    --secondary-purple: #f4f1ff; /* Lighter purple for accents */
     
     /* Danger Colors */
     --danger: #dc3545;             /* Red color for danger */
