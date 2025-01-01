@@ -3,12 +3,13 @@ import { Badge as AntdBadge } from 'antd';
 import PropTypes from 'prop-types';
 import './Badge.css';
 
-const Badge = ({ children, size, count, overflowCount, ...props }) => {
+const Badge = ({ children, size, count, overflowCount,dot, ...props }) => {
     return (
         <AntdBadge
             size={size}
             count={count}
             overflowCount={overflowCount}
+            dot={dot}
             {...props}
         >
             {children && children}
@@ -20,12 +21,13 @@ Badge.propTypes = {
     children: PropTypes.node,
     size: PropTypes.string,
     count: PropTypes.number,
+    dot :PropTypes.bool,
     overflowCount: PropTypes.number,
 };
 
 Badge.defaultProps = {
     size: 'default',
-    count: 0,
+    count: 1,
     overflowCount: 99,
 };
 const SuffixBadge = ({ size, count, overflowCount, ...props }) => {
@@ -60,4 +62,4 @@ SuffixBadge.defaultProps = {
     overflowCount: 99,
 };
 
-export {Badge,SuffixBadge};
+export {AntdBadge,Badge,SuffixBadge};

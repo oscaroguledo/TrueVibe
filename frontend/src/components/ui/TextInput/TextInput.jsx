@@ -20,8 +20,8 @@ const SearchInput = ({ status, size, placeholder, disabled, prefix, suffix, onSe
             allowClear
             size={size}
             placeholder={placeholder}
-            prefix={<Icon name={prefix} size={size} />}
-            suffix={<Icon name={suffix} size={size} />}
+            prefix={prefix}
+            suffix={suffix}
             loading={loading}
             onSearch={(e) => toggleSearch(e)}
             disabled={disabled}
@@ -144,8 +144,8 @@ const CounterInput = ({ status, size, max, defaultValue, emojicount, exceedMax, 
         onChange={(e) => setValue(e.target.value)}
         disabled={disabled}
         placeholder={placeholder}
-        prefix={<Icon name={prefix} size={size} />}
-        suffix={<Icon name={suffix} size={size} />}
+        prefix={prefix}
+        suffix={suffix}
         onSearch={onSearch}
         {...props}
         // Handle the character counting logic for emoji count
@@ -186,8 +186,8 @@ const Input = ({ size, status, placeholder, disabled, defaultValue, prefix, suff
         disabled={disabled}
         defaultValue={value}
         placeholder={placeholder}
-        prefix={<Icon name={prefix} size={size} />}
-        suffix={<Icon name={suffix} size={size} />}
+        prefix={prefix}
+        suffix={suffix}
         onSearch={onSearch}
         onChange={(e) => setValue(e.target.value)}
         {...props}

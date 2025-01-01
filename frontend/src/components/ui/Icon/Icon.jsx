@@ -10,9 +10,10 @@ const Icon = ({
   style,
   props
 }) => {
+  const Size = `icon-${size}`
   return (
     <i
-      className={`icon fa-light ${name} ${className} icon-${size}`}
+      className={`icon fa-light ${name} ${className} ${Size}`}
       onClick={onClick}
       style={style?style:{}}
       {...props}

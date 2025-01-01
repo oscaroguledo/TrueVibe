@@ -39,7 +39,7 @@ const Sidebar = ({ rooms, currentRoom, onEnterRoom, ...props }) => {
   }, []);
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout style={{ height: '100%' }}>
       <Sider
         width={sidebarOpen ? 250 : 78} // Conditional width based on sidebarOpen
         className={`sidebar ${sidebarOpen ? 'sidebar-open' : ''}`}
@@ -90,7 +90,7 @@ const Sidebar = ({ rooms, currentRoom, onEnterRoom, ...props }) => {
         
         <div className="sidebar-bottom" style={{ display: 'flex', justifyContent: 'space-between', flexDirection:'column'}}>
           <div className="sidebar-close-menu">
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width:'100%'}}>
+              <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', width:'100%'}}>
                   <Button icon={!sidebarOpen?'fa-bars':'fa-xmark'} border={'none'} onClick={() => setSidebarOpen(!sidebarOpen)}>
                     <Text className={`sidebar-close-menu-name ${!sidebarOpen?'sidebar-close-menu-name-hidden':''}`} strong
                       >{!sidebarOpen?'show':'hide'}</Text>

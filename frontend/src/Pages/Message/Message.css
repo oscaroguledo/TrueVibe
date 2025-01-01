@@ -8,19 +8,5 @@
     transition: all 1.3s ease-in-out !important; /* Smooth transition for width, height, and border-radius */
   }
  
-  .messages-profile-section {
-    width: 200px; /*Example fixed width */
-    background-color: #e76f51; /* Example color */
-    padding: 8px;
-    line-height: 100px; /* Center text vertically */
-    transition: right 0.3s ease; /* Smooth transition for button movement */
-    transition: left 0.3s ease; /* Smooth transition for button movement */
-    display: none;
-  }
-  .messages-profile-section-open{
-    display: block;
-    transition: right 0.3s ease; /* Smooth transition for button movement */
-    transition: left 0.3s ease; /* Smooth transition for button movement */
-  }
 
  

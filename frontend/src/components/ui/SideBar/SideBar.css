@@ -5,7 +5,7 @@
   left: 0;
   width: 78px; /* Initially, the width is 78px when closed */
   height: 100%;
-  background-color: var(--background-color-light);
+  background-color: var(--bg-secondary-color);
   padding: 8px;
   z-index: 10000;
   overflow-x: hidden; /* Prevent horizontal overflow when sidebar is closed */
@@ -65,20 +65,20 @@
   visibility: hidden; /* Ensure the element doesn't take up space */
 }
 .room-item:hover {
-  background-color: var(--alt-background-color);
+  background-color: var(--hover);
   border-radius: var(--border-radius);
 }
 
 .room-item-active {
-  background-color: var(--alt-background-color) !important;
-  border-right: 2px solid var(--primary-purple) !important;
+  background-color: var(--active) !important;
+  border-right: 2px solid var(--primary-color) !important;
   border-bottom-right-radius: 0px !important;
   border-top-right-radius: 0px !important;
 }
 .sidebar-bottom{
   position: absolute;
   bottom: 0px;
-  background-color: var(--background-color-light);
+  background-color: transparent;
 }
 .sidebar-close-menu-name {
   opacity: 1;
@@ -127,7 +127,7 @@
 }
 
 
-/* Mobile View */
+/* Mobile View
 @media (max-width: 768px) {
   .sidebar {
     transform: translateX(-100%);
@@ -140,7 +140,7 @@
   .sidebar-open .sidebar {
     transform: translateX(0);
   }
-}
+} */
 /* Close button styles */
 .close-btn {
   cursor: pointer;

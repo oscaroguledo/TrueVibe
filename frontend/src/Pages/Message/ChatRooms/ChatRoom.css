@@ -1,8 +1,9 @@
  
   .messages-channels-section{
-    background-color: var(--button-text-color); /* Example color */
+    background-color: var(--bg-primary-color); /* Example color */
     padding: 18px;
     height: 100%;
+    font-size: var(--font-size-small);
     
   }
   .messages-channels-section-title {

@@ -3,18 +3,18 @@ import { Collapse, Avatar, List } from 'antd';
 import './Accordion.css'
 import getLetterColor from '../../../utils/colors';
 import PropTypes from 'prop-types';
-import {SuffixBadge} from '../Badge/Badge';
+import {Badge, SuffixBadge} from '../Badge/Badge';
+import Icon from '../Icon/Icon';
 const { Panel } = Collapse;
 
-const Accordion = ({ data, onSelect }) => {
+const Accordion = ({ data,activeItem:active, onSelect }) => {
     
     const { color, backgroundColor } = getLetterColor('£');
-    const [activeItem, setActiveItem] = useState({categoryId:0, itemId:0}); // Track the active item
+    const [activeItem, setActiveItem] = useState(active); // Track the active item
 
     // Handle item click and set the active item
-    const handleClick = (categoryid,itemid, item) => {
-        
-        setActiveItem({categoryId:categoryid, itemId:itemid}); // Set the clicked item as active
+    const handleClick = (categoryid,item) => {
+        setActiveItem({categoryId:categoryid, itemId:item.id}); // Set the clicked item as active
         onSelect(item); // Call onSelect with the item
     };
     
@@ -43,23 +43,42 @@ const Accordion = ({ data, onSelect }) => {
                                 cursor: 'pointer',
                                 }}
                                 className={activeItem.itemId === item.id ? 'ant-list-item-active' : ''} // Apply 'active' class if this item is selected
-                                onClick={() => handleClick(d.id,item.id, { title: item.name|| '', image: item.image || '', members:item.members || [] })} // Set active item on click
+                                onClick={() => handleClick(d.id,item)} // Set active item on click
                                 
                             >
                                 <List.Item.Meta
                                     avatar={
-                                        <Avatar
-                                            src={item.image}
-                                            size={22}
-                                            className="accordion-item-img"
-                                            style={{
-                                                backgroundColor: backgroundColor,
-                                                color: color,
-                                                textTransform: 'uppercase',
-                                        }}>
-                                            {!item.image ? (item.prefix ? item.prefix : item.name[0]):null}
-                                        </Avatar>
-                                    }
+                                        (item.prefix === '#')?
+                                            <Avatar
+                                                src={item.image}
+                                                size={36}
+                                                shape='square'
+                                                className="accordion-item-img"
+                                                style={{
+                                                    backgroundColor: backgroundColor,
+                                                    color: color,
+                                                    textTransform: 'uppercase',
+                                                }}>
+                                                {!item.image ? (item.prefix ? item.prefix : item.name[0]):null}
+                                            </Avatar>
+                                            :
+                                            <Badge dot={true} color={`${item.online?'green':'red'}`}>
+                                                <Avatar
+                                                    src={item.image || <Icon name='fa-user'/>}
+                                                    size={36}
+                                                    shape='square'
+                                                    className="accordion-item-img"
+                                                    style={{
+                                                        backgroundColor: backgroundColor,
+                                                        color: color,
+                                                        textTransform: 'uppercase',
+                                                    }}>
+                                                    {!item.image ? (item.prefix ? item.prefix : item.name[0]):null}
+                                                </Avatar>
+                                            </Badge>
+                                        }
+                                        
+                                    
                                     title={<span className="accordion-item-name">{item.name}</span>}
                                 />
                         </List.Item>

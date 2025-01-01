@@ -6,10 +6,10 @@
   } */
   .ant-collapse,
   .ant-collapse-content  {
-    
+    font-size: var(--font-size-small);
     border: none !important;
     width: 100% !important;
-    border-radius: 2px !important;
+    border-radius: var(--border-radius) !important;
     background-color: transparent !important;
     transition: all 1.3s ease-in-out !important; /* Smooth transition for width, height, and border-radius */
     
@@ -21,7 +21,7 @@
   .ant-collapse-header,
   .ant-collapse-header .ant-collapse-header-text {
     padding: 4px !important;
-    border-radius: 2px !important;
+    border-radius: var(--border-radius) !important;
   }
 .ant-collapse-header .ant-collapse-expand-icon {
     display: none !important;
@@ -39,10 +39,11 @@
   
   .accordion-title {
     font-weight: 600;
-    font-size: calc(var(--font-size-small) - 3px);
+    font-size: calc(var(--font-size-small) - 2px);
     text-transform: uppercase;
     align-self: center;
-    color: var(--muted-text-color);
+    color: var(--text-secondary-color);
+    margin-right: 18px;
   }
   
   .accordion-content {
@@ -67,9 +68,9 @@
   
   .accordion-item-name {
     font-weight: 600;
-    font-size: calc(var(--font-size-small) - 3px);
+    font-size: calc(var(--font-size-small) - 2px);
     align-self: center;
-    color: var(--secondary-text-color);
+    color: var(--text-primary-color);
     max-width: 100%;
     white-space: nowrap; /* Prevent wrapping */
     overflow: hidden;  /* Hide overflow */
@@ -80,7 +81,7 @@
   }
   .ant-list-item-active,
   .ant-collapse-header-active .ant-collapse-header-text{
-    background-color: var(--secondary-purple) !important;
+    background-color: var(--bg-secondary-color) !important;
     border-radius: 2px !important;
   }
 

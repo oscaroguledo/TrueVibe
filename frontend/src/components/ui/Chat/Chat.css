@@ -3,7 +3,6 @@
     padding: 0px !important;
     margin: 0px !important;
     border-left: 1px solid var(--border-color);
-    border-right: 1px solid var(--border-color);
 }
 
 .chat-header {
@@ -30,50 +29,174 @@
 }
 .chat-title-name {
     font-size: var(--font-size-large);
-    font-weight: 600;
-    text-transform: uppercase;
+    font-weight: 500;
+    text-transform: capitalize;
     margin-left: 12px;
+    color: var(--text-primary-color);
 }
 
 .chat-title-users {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    flex-direction: row;
     margin-left: 20px;
     margin-right: auto;
 }
 .chat-title-users-images {
 
 }
-.chat-title-users-online {
+.chat-title-users-members {
     display: flex;
     justify-content: space-around;
     align-items: center;
     flex-direction: row;
-    color:var(--success);
+    color: var(--text-secondary-color);
     margin-left: 20px;
     margin-right: auto;
+}
+.chat-title-users-members-online,
+.chat-online {
+    margin-left: 12px;
+    margin-right: auto;
+    color:var(--success);
+}
+.chat-title-users-members-offline,
+.chat-offline {
+    margin-left: 12px;
+    margin-right: auto;
+    color:var(--danger);
 }
 .chat-title-suffix {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    min-width: 80px;
+    min-width:fit-content;
+    gap: 22px;
+    margin-left: 18px;
+    margin-right: 14px;
+}
+.chat-content {
+    
+}
+.chat-search-bar {
+    position: absolute;
+    z-index: 1;
+    width: fit-content;
+    right: 8px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+}
+.chat-search-bar-hidden {
+    visibility: hidden;
 }
 .messages-list {
-    padding: 18px;
+    padding: 8px;
+    font-size: var(--font-size-small);
+    height: calc(100vh - 127px);
+    overflow-y: scroll; /* Enable vertical scrolling */
+    scrollbar-width: none;  /* For Firefox */
+    -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+    background: transparent;
+    margin-bottom: 0px;
+}
+
+.messages-list::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
+}
+
+.message-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width:fit-content;
+    
+    width: 56%;
+    padding: var(--padding-large);
+    border-radius: var(--border-radius);
+}
+.message-item-img {
+    margin-top:auto;
+}
+.message-details {
+    width: 93%;
+    min-height: fit-content;
+    
+    padding: var(--padding-large);
+    border-radius: var(--border-radius )  ;
+    
+    background-color: var(--bg-secondary-color);
+}
+.message-details-other-message {
+    border-bottom-left-radius: 0px;
+}
+.message-details-my-message {
+    border-bottom-right-radius: 0px;
+}
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.message-header .user-name {
+    color: var(--secondary-color);
+    text-transform: capitalize;
+    font-weight: 600;
+}
+.message-body {
+    justify-content: space-around;
+}
+.message-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 18px;
+    
+}
+.message-footer .message-reactions {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: var(--secondary-color);
+    gap:8px;
+}
+.message-footer .message-reactions .message-reaction {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap:3px;
+}
+ .message-reaction .message-reaction-img {
+    padding: 4px !important;
+    cursor: pointer;
+}
+.message-time-and-views {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap:8px;
+    color: var(--text-secondary-color);
+}
+.message-time-and-views .icon-small{
+    font-size: 10px !important;
 }
 .message-input{
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 8px;
-    margin-top: auto;
-    /* position: absolute;
-    bottom: 0px; */
+    margin:0px !important;
+    padding: var(--padding-medium) !important;
+    padding-top: 0px !important;
+    background: transparent opacity 0;
+    width: auto;
     flex:1;
-
 }
-.message-input-submit-btn {
-    margin-left: 8px;
+.message-input .input-box {
+    min-width:max-content;
+    
+}
+.message-input .input-box .suffix {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--padding-medium);
 }
