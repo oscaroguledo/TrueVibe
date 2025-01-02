@@ -6,20 +6,20 @@ import {SearchInput} from '../../../components/ui/TextInput/TextInput';
 import Icon from "../../../components/ui/Icon/Icon";
 const { Text } = Typography;
 
-const ChatRoom = ({ accordionItems,activeItem,isMobile, isTablet,updateCurrentChat }) => {
+const ChatRoom = ({ accordionItems,activeItem,isMobile, isTablet,updateCurrentRoom }) => {
     
-    const [currentchat, setCurrentChat] = useState({name:'',image:'',members:[]})
+    const [currentRoom, setCurrentRoom] = useState({name:'',image:'',members:[]})
     const [searchQuery, setSearchQuery] = useState('');  // New state for the search query
 
 
     //use useeffect to store the current chat in sqlite
-    const toggleCurrentChat = (item) => {
-        setCurrentChat(item);
-        updateCurrentChat(item);
+    const toggleCurrentRoom = (item) => {
+        setCurrentRoom(item);
+        updateCurrentRoom(item);
     }
     useEffect(() => {
-        //   console.log(currentchat,'====');
-        }, [currentchat]);
+        //   console.log(currentRoom,'====');
+        }, [currentRoom]);
 
     
     
@@ -38,6 +38,7 @@ const ChatRoom = ({ accordionItems,activeItem,isMobile, isTablet,updateCurrentCh
     return (
         <div className="messages-channels-section">
             <Text className="messages-channels-section-title">ChatRoom </Text>
+
             {/* Search Input */}
             <SearchInput
                 size="large"
@@ -45,11 +46,12 @@ const ChatRoom = ({ accordionItems,activeItem,isMobile, isTablet,updateCurrentCh
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}  // Update search query on change
             />
+
             {/* Accordion Component */}
             <Accordion
                 data={filteredItems}  // Pass the filtered items to the Accordion
                 activeItem = {activeItem}
-                onSelect={(item) => toggleCurrentChat(item)}
+                onSelect={(item) => toggleCurrentRoom(item)}
             />
         </div>
 

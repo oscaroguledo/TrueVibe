@@ -25,7 +25,7 @@ Badge.propTypes = {
     overflowCount: PropTypes.number,
 };
 
-Badge.defaultProps = {
+Badge.default = {
     size: 'default',
     count: 1,
     overflowCount: 99,
@@ -56,7 +56,7 @@ SuffixBadge.propTypes = {
     overflowCount: PropTypes.number,
 };
 
-SuffixBadge.defaultProps = {
+SuffixBadge.default = {
     size: 'default',
     count: 0,
     overflowCount: 99,

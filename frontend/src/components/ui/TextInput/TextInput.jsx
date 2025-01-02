@@ -36,9 +36,9 @@ SearchInput.propTypes = {
     size: PropTypes.oneOf(['small', 'default', 'large']),
     placeholder: PropTypes.string,
     disabled: PropTypes.bool,
-    prefix: PropTypes.string,
-    suffix: PropTypes.string,
-    onSearch: PropTypes.func.isRequired,
+    prefix: PropTypes.object,
+    suffix: PropTypes.object,
+    onSearch: PropTypes.func,
 };
 
 // TextAreaInput Component
@@ -169,13 +169,13 @@ CounterInput.propTypes = {
     exceedMax: PropTypes.bool,
     placeholder: PropTypes.string,
     disabled: PropTypes.bool,
-    prefix: PropTypes.string,
-    suffix: PropTypes.string,
+    prefix: PropTypes.object,
+    suffix: PropTypes.object,
     onSearch: PropTypes.func,
 };
 
 // Input Component
-const Input = ({ size, status, placeholder, disabled, defaultValue, prefix, suffix, onSearch, ...props }) => {
+const Input = ({ size, status, placeholder,onPressEnter, disabled, defaultValue, prefix, suffix, onSearch, ...props }) => {
     const [value, setValue] = useState(defaultValue);
 
     return (
@@ -190,6 +190,7 @@ const Input = ({ size, status, placeholder, disabled, defaultValue, prefix, suff
         suffix={suffix}
         onSearch={onSearch}
         onChange={(e) => setValue(e.target.value)}
+        onPressEnter={onPressEnter}
         {...props}
         />
     );
@@ -201,8 +202,8 @@ Input.propTypes = {
     placeholder: PropTypes.string,
     disabled: PropTypes.bool,
     defaultValue: PropTypes.string,
-    prefix: PropTypes.string,
-    suffix: PropTypes.string,
+    prefix: PropTypes.object,
+    suffix: PropTypes.object,
     onSearch: PropTypes.func,
 };
 

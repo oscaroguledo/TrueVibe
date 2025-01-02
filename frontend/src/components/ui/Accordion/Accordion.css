@@ -20,9 +20,10 @@
   /* Hide the default icon */
   .ant-collapse-header,
   .ant-collapse-header .ant-collapse-header-text {
-    padding: 4px !important;
+    padding: 8px !important;
     border-radius: var(--border-radius) !important;
   }
+
 .ant-collapse-header .ant-collapse-expand-icon {
     display: none !important;
     width: 0px !important;
@@ -82,7 +83,7 @@
   .ant-list-item-active,
   .ant-collapse-header-active .ant-collapse-header-text{
     background-color: var(--bg-secondary-color) !important;
-    border-radius: 2px !important;
+    border-radius: var(--border-radius) !important;
   }
 
   

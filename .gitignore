@@ -3,7 +3,8 @@
 # dependencies
 /node_modules
 /frontend/node_modules
-/backend/target
+/rust-backend/target
+/backend/node_modules
 /.pnp
 .pnp.js
 

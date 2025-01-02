@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+
 import './Message.css';
 import Chat from "../../components/ui/Chat/Chat";
 import ChatRoom from "./ChatRooms/ChatRoom";
 import getLetterColor from "../../utils/colors";
-const Message = ({ socket, messages, isMobile, isTablet,user }) => {
+const Message = ({socket, isMobile, isTablet,user }) => {
     const { color, backgroundColor } = getLetterColor('£');
 
-    const accordionItems =[
+    const accordionItems =  [
       {id:0,title:'favourites',items:[
                 { id:0,image: 'https://api.dicebear.com/7.x/miniavs/svg?seed=1', name: 'Item Name 1', online:true},
                 { id:1,image: 'https://api.dicebear.com/7.x/miniavs/svg?seed=2',name: 'hello', online:true},
@@ -30,34 +31,28 @@ const Message = ({ socket, messages, isMobile, isTablet,user }) => {
                 { id:'15',prefix:'#',image: null, name: 'Item Name 2', membersOnline:2, members: [{img:'https://api.dicebear.com/7.x/miniavs/svg?seed=15',name:'member16'},{img:'https://api.dicebear.com/7.x/miniavs/svg?seed=4',name:'member1'},{img:'https://api.dicebear.com/7.x/miniavs/svg?seed=4',name:'member1'}] },
                 { id:'16',prefix:'#',image: null, name: 'Item Name 3', membersOnline:2, members: [{img:'https://api.dicebear.com/7.x/miniavs/svg?seed=14',name:'member17'},{img:'https://api.dicebear.com/7.x/miniavs/svg?seed=4',name:'member1'},{img:'https://api.dicebear.com/7.x/miniavs/svg?seed=4',name:'member1'}]},
       ]}
-  ]
+    ]
     const activeItem = {categoryId:accordionItems[1].id, itemId:accordionItems[1].items[0].id}
-    const [currentchat, setCurrentChat] = useState(accordionItems[1].items[0])
-
+    
     //use useeffect to store the current chat in sqlite
-    useEffect(() => {
-          console.log(currentchat,'====');
-        }, [currentchat]);
+    const [currentRoom, setCurrentRoom] = useState(accordionItems[1].items[0])
 
+    const toggleRoom = (room) => {
+      console.log(socket,'===')
+        console.log("joining room", room.name);
+        socket?.emit("join", room.name);
+        setCurrentRoom(room);
 
-    // const sendMessage = (e) => {
-    //   e.preventDefault();
-    //   if (input.trim() === "") return; // Prevent sending empty messages
-    //   socket?.emit("message", {
-    //     text: input,
-    //     room: "Chats",
-    //   });
-    //   setInput(""); // Clear input after sending
-    // };
+        socket.on("join-message", (msg) => {
+            console.log("Message received", msg);
+          
+        });
+    }
     
     return (
       <div className="message-container">
-          
-          <ChatRoom accordionItems={accordionItems} activeItem={activeItem}  isMobile={isMobile} isTablet={isTablet} updateCurrentChat={(item) => setCurrentChat(item)}  />
-
-          <Chat currentChat ={currentchat} socket={socket} user={user} isMobile={isMobile} color={color} backgroundColor={backgroundColor} />
-          
-        
+          <ChatRoom accordionItems={accordionItems} activeItem={activeItem}  isMobile={isMobile} isTablet={isTablet} updateCurrentRoom={(item) => toggleRoom(item)} />
+          <Chat currentRoom ={currentRoom} socket={socket} user={user} isMobile={isMobile} color={color} backgroundColor={backgroundColor} />
       </div>
 
     );

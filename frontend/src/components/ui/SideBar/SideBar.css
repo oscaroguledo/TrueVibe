@@ -45,31 +45,31 @@
   visibility: hidden; /* Ensure the element doesn't take up space */
 }
 
-/* Room list styles */
+/* screen list styles */
 
-.room-list{
+.screen-list{
   background: transparent !important;
   border: none !important;
 }
 
-.room-item-name {
+.screen-item-name {
   opacity: 1;
   max-width: 100%;
   white-space: nowrap; /* Prevent wrapping */
   overflow: hidden;  /* Hide overflow */
 }
 
-.room-item-name-hidden {
+.screen-item-name-hidden {
   opacity: 0; /* Fade out when closed */
   max-width: 0; /* Optionally collapse width */
   visibility: hidden; /* Ensure the element doesn't take up space */
 }
-.room-item:hover {
+.screen-item:hover {
   background-color: var(--hover);
   border-radius: var(--border-radius);
 }
 
-.room-item-active {
+.screen-item-active {
   background-color: var(--active) !important;
   border-right: 2px solid var(--primary-color) !important;
   border-bottom-right-radius: 0px !important;

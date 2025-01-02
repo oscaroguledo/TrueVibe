@@ -114,6 +114,12 @@
     padding: var(--padding-large);
     border-radius: var(--border-radius);
 }
+.message-item-me {
+    margin-left: auto;
+}
+.message-item-other {
+    margin-right: auto;
+}
 .message-item-img {
     margin-top:auto;
 }
@@ -126,10 +132,10 @@
     
     background-color: var(--bg-secondary-color);
 }
-.message-details-other-message {
+.message-details-other {
     border-bottom-left-radius: 0px;
 }
-.message-details-my-message {
+.message-details-me {
     border-bottom-right-radius: 0px;
 }
 .message-header {
@@ -166,8 +172,9 @@
     gap:3px;
 }
  .message-reaction .message-reaction-img {
-    padding: 4px !important;
+    padding: 1px !important;
     cursor: pointer;
+    background: transparent !important;
 }
 .message-time-and-views {
     display: flex;

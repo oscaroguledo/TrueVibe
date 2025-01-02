@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'; // Import PropTypes for validation
 import { Button as CustomButton } from 'antd';
 import Icon from '../Icon/Icon';  // Assuming you have a custom Icon component for icons
 import './Button.css';
+
 const Button = ({
   icon,
   text,
@@ -42,7 +43,7 @@ Button.propTypes = {
   onClick: PropTypes.func,         // onClick event handler
 };
 
-Button.defaultProps = {
+Button.default = {
   icon: null,
   text: '',           // Default text is empty if not provided
   variant:'outlined',

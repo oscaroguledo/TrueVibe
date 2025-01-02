@@ -9,25 +9,24 @@ import Button from "../Button/Button";
 const { Text } = Typography;
 
 
-
-const Sidebar = ({ rooms, currentRoom, onEnterRoom, ...props }) => {
-  console.log(props,'===')
-  const { color, backgroundColor } = getLetterColor(props.user.firstname[0]||props.user.name[0]||'O');
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [currentmenuitem, setCurrentMenuItem] = useState(currentRoom?.text || rooms[0].text);
-  // Create a reference to the sidebar element
-  const sidebarRef = useRef(null);
-  const clickMenuItem =(key) =>{
-    onEnterRoom(rooms.find(room => room.text === key));
-    setCurrentMenuItem(key);
-  }
-  // Close sidebar if clicked outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-        setSidebarOpen(false); // Close the sidebar when clicked outside
-      }
-    };
+const Sidebar = ({ screens, currentScreen, onEnterScreen, ...props }) => {
+    
+    const { color, backgroundColor } = getLetterColor(props.user.firstname[0]||props.user.name[0]||'O');
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [currentmenuitem, setCurrentMenuItem] = useState(currentScreen?.text || screens[0].text);
+    // Create a reference to the sidebar element
+    const sidebarRef = useRef(null);
+    const clickMenuItem =(key) =>{
+        onEnterScreen(screens.find(screen => screen.text === key));
+        setCurrentMenuItem(key);
+    }
+    // Close sidebar if clicked outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+          if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+              setSidebarOpen(false); // Close the sidebar when clicked outside
+          }
+        };
 
     // Adding the event listener
     document.addEventListener("mousedown", handleClickOutside);
@@ -61,26 +60,27 @@ const Sidebar = ({ rooms, currentRoom, onEnterRoom, ...props }) => {
               style={{ marginRight: 10 }}
             />
             <Text className={`sidebar-header-name ${!sidebarOpen?'sidebar-header-name-hidden':''}`} strong
-            >Rooms</Text>
+            >Screens</Text>
           </div>
         </div>
 
-        {/* Rooms List */}
+        {/* screens List */}
         <Menu
           // mode="inline"
-          selectedKeys={[currentRoom.text]}
+          selectedKeys={[currentScreen.text]}
           onClick={({ key }) => clickMenuItem(key)}
           style={{ paddingTop: 20 }}
-          className="room-list"
+          className="screen-list"
         >
-          {rooms.map((room, index) => (
+          {screens.map((screen, index) => (
             <Menu.Item 
-              key={room.text} 
-              icon={<Icon name={room.icon}/>}
-              className={`room-item ${currentmenuitem === room.text ? 'room-item-active' : ''}`}
+              
+              key={screen.text} 
+              icon={<Icon name={screen.icon}/>}
+              className={`screen-item ${currentmenuitem === screen.text ? 'screen-item-active' : ''}`}
             >
-              <Text className={`room-item-name ${!sidebarOpen?'room-item-name-hidden':''}`} strong
-                >{room.text}</Text>
+              <Text className={`screen-item-name ${!sidebarOpen?'screen-item-name-hidden':''}`} strong
+                >{screen.text}</Text>
                 
             </Menu.Item>
           ))}

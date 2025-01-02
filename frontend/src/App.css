@@ -17,3 +17,6 @@
   left: 100px !important;
 }
 
+.ant-dropdown-menu-item-active {
+  background-color: var(--bg-secondary-color) !important;
+}
