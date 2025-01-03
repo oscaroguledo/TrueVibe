@@ -2,6 +2,8 @@ const { Message } = require('../models/Message');
 const { User } = require('../models/User');
 const { Channel } = require('../models/Channel');
 const { ChannelMember } = require('../models/ChannelMember');
+const { paginate } = require('../utils/paginationUtil');  // Import pagination utility
+const { logAuditAction } = require('../utils/logAuditAction');
 
 // 1. Create a New Message
 const createMessage = async (req, res) => {
@@ -38,6 +40,14 @@ const createMessage = async (req, res) => {
     // Save the message to the database
     await message.save();
 
+    // Log the action in the background
+    await logAuditAction(
+      sender_id,
+      'create',
+      `Sent a Message: ${message._id}`,
+      { message_id: message._id}
+    );
+    
     return res.status(201).json({
       message: 'Message created successfully',
       message,
@@ -49,18 +59,25 @@ const createMessage = async (req, res) => {
 };
 
 // 2. Get All Messages in a Channel
+// Get all messages in a channel with pagination
 const getMessagesByChannel = async (req, res) => {
   try {
     const { channel_id } = req.params;
-    
+    const { page = 1, limit = 10 } = req.query; // Pagination parameters (default: page 1, limit 10)
+
+    // Validate the channel
     const channel = await Channel.findOne({ channel_id });
     if (!channel) return res.status(404).json({ message: 'Channel not found' });
 
-    const messages = await Message.find({ channel_id }).sort({ timestamp: 1 });
+    // Use the paginate utility to fetch paginated messages for the channel
+    const { data: messages, pagination } = await paginate(Message, { channel_id }, page, limit, { timestamp: 1 });
 
     if (messages.length === 0) return res.status(404).json({ message: 'No messages found for this channel' });
 
-    return res.status(200).json({ messages });
+    return res.status(200).json({
+      messages,
+      pagination,
+    });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: 'Server error' });
@@ -68,23 +85,30 @@ const getMessagesByChannel = async (req, res) => {
 };
 
 // 3. Get All Direct Messages for a User
+// Get all direct messages for a user with pagination
 const getDirectMessagesByUser = async (req, res) => {
   try {
     const { user_id } = req.params;
+    const { page = 1, limit = 10 } = req.query; // Pagination parameters (default: page 1, limit 10)
 
+    // Validate the user
     const user = await User.findById(user_id);
     if (!user) return res.status(404).json({ message: 'User not found' });
 
-    const directMessages = await Message.find({
+    // Use the paginate utility to fetch paginated direct messages
+    const { data: directMessages, pagination } = await paginate(Message, {
       $or: [
         { sender_id: user_id },
         { recipient_id: user_id },
       ],
-    }).sort({ timestamp: 1 });
+    }, page, limit, { timestamp: 1 });
 
     if (directMessages.length === 0) return res.status(404).json({ message: 'No direct messages found' });
 
-    return res.status(200).json({ directMessages });
+    return res.status(200).json({
+      directMessages,
+      pagination,
+    });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: 'Server error' });
@@ -109,7 +133,7 @@ const getMessageById = async (req, res) => {
 // 5. Update (Edit) a Message
 const updateMessage = async (req, res) => {
   try {
-    const { message_id } = req.params;
+    const { message_id, user_id } = req.params;
     const { message_content, status, reactions, mentions } = req.body;
 
     const message = await Message.findOne({ message_id });
@@ -122,7 +146,15 @@ const updateMessage = async (req, res) => {
     message.edited_at = Date.now();
 
     await message.save();
-
+    
+    // Log the action in the background
+    await logAuditAction(
+      user_id,
+      'update',
+      `Updated a Message: ${message._id}`,
+      { message_id: message._id}
+    );
+ 
     return res.status(200).json({ message: 'Message updated successfully', message });
   } catch (err) {
     console.error(err);
@@ -133,14 +165,22 @@ const updateMessage = async (req, res) => {
 // 6. Delete a Message
 const deleteMessage = async (req, res) => {
   try {
-    const { message_id } = req.params;
+    const { user_id, message_id } = req.params;
 
     const message = await Message.findOne({ message_id });
     if (!message) return res.status(404).json({ message: 'Message not found' });
 
     message.status = 'deleted';
     await message.save();
-
+        
+    // Log the action in the background
+    await logAuditAction(
+      user_id,
+      'delete',
+      `Deleted a Message: ${message._id}`,
+      { message_id: message._id}
+    );
+ 
     return res.status(200).json({ message: 'Message deleted successfully' });
   } catch (err) {
     console.error(err);
@@ -161,7 +201,15 @@ const addReactionToMessage = async (req, res) => {
 
     message.reactions[emoji] = user_id;
     await message.save();
-
+        
+    // Log the action in the background
+    await logAuditAction(
+      user_id,
+      'update',
+      `Added a Message Reaction: ${message._id}`,
+      { message_id: message._id}
+    );
+ 
     return res.status(200).json({ message: 'Reaction added successfully', message });
   } catch (err) {
     console.error(err);
@@ -181,6 +229,15 @@ const removeReactionFromMessage = async (req, res) => {
     if (message.reactions[emoji] === user_id) {
       delete message.reactions[emoji];
       await message.save();
+          
+    // Log the action in the background
+    await logAuditAction(
+      user_id,
+      'update',
+      `Removed a Message Reaction: ${message._id}`,
+      { message_id: message._id}
+    );
+ 
       return res.status(200).json({ message: 'Reaction removed successfully', message });
     }
 
@@ -192,17 +249,30 @@ const removeReactionFromMessage = async (req, res) => {
 };
 
 // 9. Search Messages by Content
+// Search messages with pagination
 const searchMessages = async (req, res) => {
   try {
     const { query } = req.query;
+    const { page = 1, limit = 10 } = req.query; // Pagination parameters (default: page 1, limit 10)
 
-    const messages = await Message.find({
-      message_content: { $regex: query, $options: 'i' },
+    if (!query) {
+      return res.status(400).json({ message: 'Search query is required' });
+    }
+
+    // Use the paginate utility to search and paginate messages
+    const { data: messages, pagination } = await paginate(Message, 
+      { message_content: { $regex: query, $options: 'i' } }, // Search by message content (case-insensitive)
+      page, 
+      limit, 
+      { timestamp: 1 } // Optionally, you can sort the results by timestamp
+    );
+
+    if (messages.length === 0) return res.status(404).json({ message: 'No messages found' });
+
+    return res.status(200).json({
+      messages,
+      pagination,
     });
-
-    if (!messages.length) return res.status(404).json({ message: 'No messages found' });
-
-    return res.status(200).json({ messages });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: 'Server error' });
@@ -212,14 +282,22 @@ const searchMessages = async (req, res) => {
 // 10. Mark Message as Read
 const markMessageAsRead = async (req, res) => {
   try {
-    const { message_id } = req.params;
+    const { message_id, user_id } = req.params;
 
     const message = await Message.findOne({ message_id });
     if (!message) return res.status(404).json({ message: 'Message not found' });
 
     message.status = 'read';
     await message.save();
-
+        
+    // Log the action in the background
+    await logAuditAction(
+      user_id,
+      'update',
+      `Marked a Message as Read: ${message._id}`,
+      { message_id: message._id}
+    );
+ 
     return res.status(200).json({ message: 'Message marked as read' });
   } catch (err) {
     console.error(err);
@@ -228,17 +306,25 @@ const markMessageAsRead = async (req, res) => {
 };
 
 // 11. Get Messages Mentions for a User
+// Get messages with mentions for a specific user with pagination
 const getMessagesWithMentionsForUser = async (req, res) => {
   try {
     const { user_id } = req.params;
+    const { page = 1, limit = 10 } = req.query; // Pagination parameters (default: page 1, limit 10)
 
-    const messages = await Message.find({
+    // Use the paginate utility to fetch paginated messages with mentions for the user
+    const { data: messages, pagination } = await paginate(Message, {
       mentions: user_id,
+    }, page, limit);
+
+    if (messages.length === 0) {
+      return res.status(404).json({ message: 'No messages found with mentions for this user' });
+    }
+
+    return res.status(200).json({
+      messages,
+      pagination,
     });
-
-    if (!messages.length) return res.status(404).json({ message: 'No messages found with mentions for this user' });
-
-    return res.status(200).json({ messages });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: 'Server error' });

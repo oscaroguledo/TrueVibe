@@ -1,7 +1,8 @@
-const { Channel,validateChannel } = require('../models/channel/Channel');
+const { Channel,validateChannel } = require('../models/channel/channelModel');
 const { User } = require('../models/User');
 const { Group } = require('../models/Group');
-const { ChannelMember,validateChannelMember } = require('../models/channel/ChannelMember');
+const { ChannelMember,validateChannelMember } = require('../models/channel/channelMember');
+const { logAuditAction } = require('../utils/logAuditAction');
 
 
 const createChannel = async (req, res) => {
@@ -27,6 +28,14 @@ const createChannel = async (req, res) => {
     // Create the new channel
     const channel = new Channel(value);
     await channel.save();
+
+    // Log the channel creation action
+    await logAuditAction(
+      req.user.user_id,
+      'create',
+      `Created a new channel: ${channel.channel_name}`,
+      { channel_id: channel._id, group_id: value.group_id, owner_id: value.owner_id }
+    );
 
     // Add the owner as a member of the channel (they are both admin and member)
     const memberData = {
@@ -86,7 +95,13 @@ const addMemberToChannel = async (req, res) => {
       });
   
       await channelMember.save();
-  
+      // Log the action of adding a member to the channel
+      await logAuditAction(
+        req.user.user_id,
+        'create',
+        `Added user ${user.full_name} as ${role} to channel ${channel.channel_name}`,
+        { channel_id: channel._id, user_id: user._id, role }
+      );
       return res.status(201).json({ message: 'User added as member', channelMember });
     } catch (err) {
       console.error(err);
@@ -102,7 +117,12 @@ const removeMemberFromChannel = async (req, res) => {
   
       const member = await ChannelMember.findOneAndDelete({ channel_id, user_id });
       if (!member) return res.status(404).json({ message: 'User not found in the channel' });
-  
+      await logAuditAction(
+        req.user.user_id,
+        'delete',
+        `Removed user ${user.full_name} from channel ${channel.channel_name}`,
+        { channel_id: channel._id, user_id: user._id }
+      );
       return res.status(200).json({ message: 'User removed from channel successfully' });
     } catch (err) {
       console.error(err);
@@ -110,83 +130,120 @@ const removeMemberFromChannel = async (req, res) => {
     }
   };
   
+// Get all members in a channel with pagination
 const getAllMembersInChannel = async (req, res) => {
-    try {
-      const { channel_id } = req.params;
-      const members = await ChannelMember.find({ channel_id }).populate('user_id', 'username full_name profile_picture_url role');
-  
-      if (!members.length) return res.status(404).json({ message: 'No members found for this channel' });
-  
-      return res.status(200).json({ members });
-    } catch (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Server error' });
+  try {
+    const { channel_id } = req.params;
+    const { page = 1, limit = 10 } = req.query; // Default page 1 and limit 10
+
+    // Use the paginate utility for channel members
+    const { data: members, pagination } = await paginate(ChannelMember, { channel_id }, page, limit);
+
+    if (members.length === 0) {
+      return res.status(404).json({ message: 'No members found for this channel' });
     }
-  };
+
+    return res.status(200).json({
+      members,
+      pagination,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Server error' });
+  }
+};
       
+// Get all channels by group with pagination
 const getChannelsByGroup = async (req, res) => {
-    try {
-      const { group_id } = req.params;
-      const channels = await Channel.find({ group_id });
-  
-      if (!channels) return res.status(404).json({ message: 'No channels found for this group' });
-  
-      return res.status(200).json({ channels });
-    } catch (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Server error' });
+  try {
+    const { group_id } = req.params;
+    const { page = 1, limit = 10 } = req.query; // Default page 1 and limit 10
+
+    // Use the paginate utility for channels in a group
+    const { data: channels, pagination } = await paginate(Channel, { group_id }, page, limit);
+
+    if (channels.length === 0) {
+      return res.status(404).json({ message: 'No channels found for this group' });
     }
-  };
-  const getChannelDetails = async (req, res) => {
-    try {
-      const { channel_id } = req.params;
-      const channel = await Channel.findOne({ channel_id });
-  
-      if (!channel) return res.status(404).json({ message: 'Channel not found' });
-  
-      return res.status(200).json({ channel });
-    } catch (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Server error' });
-    }
-  };
-  const updateChannel = async (req, res) => {
-    try {
-      const { channel_id } = req.params;
-      const { channel_name, channel_type, status } = req.body;
-  
-      const channel = await Channel.findOne({ channel_id });
-      if (!channel) return res.status(404).json({ message: 'Channel not found' });
-  
-      channel.channel_name = channel_name || channel.channel_name;
-      channel.channel_type = channel_type || channel.channel_type;
-      channel.status = status || channel.status;
-      channel.updated_at = Date.now();
-  
-      await channel.save();
-      return res.status(200).json({ message: 'Channel updated successfully', channel });
-    } catch (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Server error' });
-    }
-  };
-  const archiveChannel = async (req, res) => {
-    try {
-      const { channel_id } = req.params;
-      const channel = await Channel.findOne({ channel_id });
-      if (!channel) return res.status(404).json({ message: 'Channel not found' });
-  
-      channel.status = 'archived';
-      channel.updated_at = Date.now();
-      await channel.save();
-  
-      return res.status(200).json({ message: 'Channel archived successfully', channel });
-    } catch (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Server error' });
-    }
-  };
-  const reactivateChannel = async (req, res) => {
+
+    return res.status(200).json({
+      channels,
+      pagination,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Server error' });
+  }
+};
+
+const getChannelDetails = async (req, res) => {
+  try {
+    const { channel_id } = req.params;
+    const channel = await Channel.findOne({ channel_id });
+
+    if (!channel) return res.status(404).json({ message: 'Channel not found' });
+
+    return res.status(200).json({ channel });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Server error' });
+  }
+};
+
+const updateChannel = async (req, res) => {
+  try {
+    const { channel_id } = req.params;
+    const { channel_name, channel_type, status } = req.body;
+
+    const channel = await Channel.findOne({ channel_id });
+    if (!channel) return res.status(404).json({ message: 'Channel not found' });
+
+    channel.channel_name = channel_name || channel.channel_name;
+    channel.channel_type = channel_type || channel.channel_type;
+    channel.status = status || channel.status;
+    channel.updated_at = Date.now();
+
+    await channel.save();
+
+    // Log the update action
+    await logAuditAction(
+      req.user.user_id,
+      'update',
+      `Updated channel ${channel.channel_name}`,
+      { channel_id: channel._id, old_data: oldChannelData, new_data: channel }
+    );
+
+    return res.status(200).json({ message: 'Channel updated successfully', channel });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Server error' });
+  }
+};
+
+const archiveChannel = async (req, res) => {
+  try {
+    const { channel_id } = req.params;
+    const channel = await Channel.findOne({ channel_id });
+    if (!channel) return res.status(404).json({ message: 'Channel not found' });
+
+    channel.status = 'archived';
+    channel.updated_at = Date.now();
+    await channel.save();
+    // Log the archiving action
+    await logAuditAction(
+      req.user.user_id,
+      'update',
+      `Archived channel ${channel.channel_name}`,
+      { channel_id: channel._id, old_status: oldChannelStatus, new_status: 'archived' }
+    );
+    return res.status(200).json({ message: 'Channel archived successfully', channel });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Server error' });
+  }
+};
+
+const reactivateChannel = async (req, res) => {
     try {
       const { channel_id } = req.params;
       const channel = await Channel.findOne({ channel_id });
@@ -195,41 +252,68 @@ const getChannelsByGroup = async (req, res) => {
       channel.status = 'active';
       channel.updated_at = Date.now();
       await channel.save();
-  
+      // Log the reactivation action
+      await logAuditAction(
+        req.user.user_id,
+        'update',
+        `Reactivated channel ${channel.channel_name}`,
+        { channel_id: channel._id, old_status: oldChannelStatus, new_status: 'active' }
+      );
       return res.status(200).json({ message: 'Channel reactivated successfully', channel });
     } catch (err) {
       console.error(err);
       return res.status(500).json({ message: 'Server error' });
     }
   };
+
+// Search channels with pagination
 const searchChannels = async (req, res) => {
-    try {
-      const { query } = req.query;
-      const channels = await Channel.find({
-        channel_name: { $regex: query, $options: 'i' },
-      });
-  
-      if (!channels.length) return res.status(404).json({ message: 'No channels found' });
-  
-      return res.status(200).json({ channels });
-    } catch (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Server error' });
+  try {
+    const { query } = req.query;
+    const { page = 1, limit = 10 } = req.query; // Default page 1 and limit 10
+
+    // Use the paginate utility for channel search
+    const { data: channels, pagination } = await paginate(Channel, {
+      channel_name: { $regex: query, $options: 'i' },
+    }, page, limit);
+
+    if (channels.length === 0) {
+      return res.status(404).json({ message: 'No channels found' });
     }
-  };
+
+    return res.status(200).json({
+      channels,
+      pagination,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// Get channel roles with pagination
 const getChannelRoles = async (req, res) => {
-    try {
-      const { channel_id } = req.params;
-      const members = await ChannelMember.find({ channel_id });
-  
-      if (!members.length) return res.status(404).json({ message: 'No members found for this channel' });
-  
-      return res.status(200).json({ roles: members });
-    } catch (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Server error' });
+  try {
+    const { channel_id } = req.params;
+    const { page = 1, limit = 10 } = req.query; // Default page 1 and limit 10
+
+    // Use the paginate utility for channel roles
+    const { data: members, pagination } = await paginate(ChannelMember, { channel_id }, page, limit);
+
+    if (members.length === 0) {
+      return res.status(404).json({ message: 'No members found for this channel' });
     }
-  };
+
+    return res.status(200).json({
+      roles: members,
+      pagination,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Server error' });
+  }
+};
+
 const updateChannelMemberRole = async (req, res) => {
     try {
       const { channel_id, user_id } = req.params;
@@ -257,12 +341,19 @@ const updateChannelMemberRole = async (req, res) => {
       }
   
       // Update the member's role
+      const oldRole = member.role;
       member.role = role;
       member.updated_at = Date.now();
   
       // Save the updated member data
       await member.save();
-  
+      // Log the role update action
+      await logAuditAction(
+        req.user.user_id,
+        'update',
+        `Updated user ${user_id} role from ${oldRole} to ${role} in channel ${channel.channel_name}`,
+        { channel_id: channel._id, user_id, old_role: oldRole, new_role: role }
+      );
       return res.status(200).json({
         message: `User role updated to ${role} successfully`,
         member,

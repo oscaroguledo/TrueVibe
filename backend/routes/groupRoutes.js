@@ -12,7 +12,7 @@ const {
   removeEmployeeFromGroup,
   addAdminToGroup,
   removeAdminFromGroup
-} = require('../controllers/groupController');
+} = require('../controller/groupController');
 
 // **Group Operations**
 router.post('/', createGroup); // Create a new group

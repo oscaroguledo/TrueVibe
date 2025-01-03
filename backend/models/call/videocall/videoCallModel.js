@@ -76,11 +76,12 @@ const validateVideoCall = (videoCall) => {
 
     end_time: Joi.date().optional(),
 
-    room_id: Joi.string()
-      .required()
-      .messages({
-        'any.required': 'Room ID is required.',
-      }),
+    room_id: {
+      type: String,
+      unique: true,  // Ensure the room_id is unique // its a url meeting_room_link
+      required: [true, 'Room ID is required'],
+      match: [/^[a-zA-Z0-9_-]+$/, 'Invalid room ID format'], // Ensure room ID is alphanumeric with hyphens or underscores
+    },
 
     status: Joi.string()
       .valid('scheduled', 'active', 'completed', 'cancelled')

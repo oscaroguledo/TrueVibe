@@ -1,6 +1,8 @@
 const { User, validateUser } = require('../models/userModel'); // Import the User model and Joi validation
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { paginate } = require('../utils/paginationUtil'); // Assuming you have a pagination utility
+const { logAuditAction } = require('../utils/logAuditAction');
 
 // Create User
 const createUser = async (req, res) => {
@@ -23,6 +25,14 @@ const createUser = async (req, res) => {
     const user = new User(value);
     await user.save();
 
+    // Log the action in the background
+    await logAuditAction(
+      user_id,
+      'create',
+      `Created a User: ${user._id}`,
+      { user_id: user._id, email:user.email }
+    );
+
     return res.status(201).json({
       message: 'User created successfully',
       user,
@@ -34,12 +44,24 @@ const createUser = async (req, res) => {
 };
 
 // Get All Users
+// Get all users with pagination
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    // Destructure page and limit from query parameters, with defaults
+    const { page = 1, limit = 10 } = req.query;
+
+    // Use the paginate utility to fetch users
+    const { data: users, pagination } = await paginate(User, {}, page, limit);
+
+    if (users.length === 0) {
+      return res.status(404).json({ message: 'No users found' });
+    }
+
+    // Return the paginated users with pagination metadata
     return res.status(200).json({
       message: 'Users retrieved successfully',
       users,
+      pagination,
     });
   } catch (err) {
     console.error(err);
@@ -82,6 +104,14 @@ const updateUser = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
+    // Log the action in the background
+    await logAuditAction(
+      user_id,
+      'update',
+      `Updated a User: ${user._id}`,
+      { user_id: user._id}
+    );
+
     return res.status(200).json({
       message: 'User updated successfully',
       user,
@@ -100,6 +130,15 @@ const deleteUser = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
+
+    // Log the action in the background
+    await logAuditAction(
+      user_id,
+      'delete',
+      `Deleted a User: ${user._id}`,
+      { user_id: user._id}
+    );
+
     return res.status(200).json({ message: 'User deleted successfully' });
   } catch (err) {
     console.error(err);
@@ -162,6 +201,14 @@ const changePassword = async (req, res) => {
     user.password_hash = await bcrypt.hash(newPassword, salt);
     await user.save();
 
+    // Log the action in the background
+    await logAuditAction(
+      user_id,
+      'update',
+      `Updated a User Password: ${user._id}`,
+      { user_id: user._id}
+    );
+
     return res.status(200).json({ message: 'Password changed successfully' });
   } catch (err) {
     console.error(err);
@@ -189,6 +236,14 @@ const updateProfilePicture = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
+
+    // Log the action in the background
+    await logAuditAction(
+      user_id,
+      'update',
+      `Updated a User Profile Picture: ${user._id}`,
+      { user_id: user._id}
+    );
 
     return res.status(200).json({
       message: 'Profile picture updated successfully',

@@ -91,13 +91,17 @@
       "supertest": "^6.3.4",
       "bcryptjs":"^2.4.3",
       "uuid":"^11.0.3",
-      "jsonwebtoken":"^9.0.2"
+      "jsonwebtoken":"^9.0.2",
+      "bull":"^4.16.5",
+      "redis":"^4.7.0"
     },
     "devDependencies": {
       "chai": "^5.1.0",
       "chai-http": "^4.4.0",
       "mocha": "^10.4.0",
       "request": "^2.88.2",
-      "eslint": "^8.7.0"
+      "eslint": "^8.7.0",
+      "bull":"^4.16.5",
+      "redis":"^4.7.0"
     }
   }

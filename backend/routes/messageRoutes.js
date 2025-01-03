@@ -13,42 +13,42 @@ const {
   markMessageAsRead,
   getMessagesWithMentionsForUser,
   getReactionsForMessage
-} = require('../controllers/messageController');
+} = require('../controller/messageController');
 
 // Create a new message
-router.post('/api/messages', createMessage);
+router.post('/', createMessage);
 
 // Get all messages in a specific channel
-router.get('/api/messages/channel/:channel_id', getMessagesByChannel);
+router.get('/channel/:channel_id', getMessagesByChannel);
 
 // Get all direct messages for a user
-router.get('/api/messages/user/:user_id/direct', getDirectMessagesByUser);
+router.get('/user/:user_id/direct', getDirectMessagesByUser);
 
 // Get a single message by message_id
-router.get('/api/messages/:message_id', getMessageById);
+router.get('/:message_id', getMessageById);
 
 // Update (edit) a message
-router.put('/api/messages/:message_id', updateMessage);
+router.put('/:message_id', updateMessage);
 
 // Delete a message (soft delete by changing the status)
-router.delete('/api/messages/:message_id', deleteMessage);
+router.delete('/:message_id', deleteMessage);
 
 // Add a reaction (emoji) to a message
-router.post('/api/messages/:message_id/reactions', addReactionToMessage);
+router.post('/:message_id/reactions', addReactionToMessage);
 
 // Remove a reaction from a message
-router.delete('/api/messages/:message_id/reactions', removeReactionFromMessage);
+router.delete('/:message_id/reactions', removeReactionFromMessage);
 
 // Search messages by content
-router.get('/api/messages/search', searchMessages);
+router.get('/search', searchMessages);
 
 // Mark a message as read
-router.patch('/api/messages/:message_id/read', markMessageAsRead);
+router.patch('/:message_id/read', markMessageAsRead);
 
 // Get all messages where a user is mentioned
-router.get('/api/messages/mentions/:user_id', getMessagesWithMentionsForUser);
+router.get('/mentions/:user_id', getMessagesWithMentionsForUser);
 
 // Get all reactions for a message
-router.get('/api/messages/:message_id/reactions', getReactionsForMessage);
+router.get('/:message_id/reactions', getReactionsForMessage);
 
 module.exports = router;

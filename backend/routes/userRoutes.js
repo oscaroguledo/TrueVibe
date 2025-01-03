@@ -11,7 +11,7 @@ const {
   loginUser,
   changePassword,
   updateProfilePicture
-} = require('../controllers/userController');
+} = require('../controller/userController');
 
 // **User Operations**
 router.post('/', createUser); // Create a new user
