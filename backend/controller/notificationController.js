@@ -1,5 +1,5 @@
 const { Notification } = require('../models/notificationModel');
-const { User } = require('../models/User');
+const { User } = require('../models/userModel');
 const { paginate } = require('../utils/paginationUtil');  // Import pagination utility
 const { logAuditAction } = require('../utils/logAuditAction');
 

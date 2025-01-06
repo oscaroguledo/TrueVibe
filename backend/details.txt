@@ -156,6 +156,16 @@ Here’s a conceptual database structure to support such a platform, broken down
   - `timestamp`
   - `affected_object` (JSON field: could be a message, task, file, etc.)
 
+### **13. calender events**
+- **audit_logs**: Stores system actions taken by users (account creation, file uploads, message deletions, etc.).
+  - `log_id` (PK)
+  - `user_id` (FK to `users.user_id`)
+  - `action_type` (create, update, delete)
+  - `action_description`
+  - `timestamp`
+  - `affected_object` (JSON field: could be a message, task, file, etc.)
+
+---
 ---
 
 ### **Relationships Overview:**

@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require('uuid');
 
 // Define the Mongoose schema for messages
 const messageSchema = new mongoose.Schema({
-  message_id: {
+  id: {
     type: String,
     default: uuidv4,  // Auto-generate UUID for each message
     unique: true,
@@ -18,6 +18,11 @@ const messageSchema = new mongoose.Schema({
     type: String,
     ref: 'Channel', // Reference to the channel (nullable for direct messages)
     default: null,
+  },
+  chat_id: {
+    type: String,
+    required: true,
+    ref: 'Chat',
   },
   recipient_id: {
     type: String,
@@ -56,7 +61,7 @@ const messageSchema = new mongoose.Schema({
     ref: 'User', // Array of user IDs who are mentioned in the message
     default: [],
   }],
-});
+}, { timestamps: true });
 
 // Mongoose model for Message
 const Message = mongoose.model('Message', messageSchema);
@@ -74,6 +79,12 @@ const validateMessage = (message) => {
       .allow(null) // Channel ID is optional for direct messages
       .messages({
         'string.base': 'Channel ID must be a string.',
+      }),
+    chat_id: Joi.string()
+      .optional()
+      .allow(null) // Chat ID is optional for direct messages
+      .messages({
+        'string.base': 'Chat ID must be a string.',
       }),
     recipient_id: Joi.string()
       .optional()

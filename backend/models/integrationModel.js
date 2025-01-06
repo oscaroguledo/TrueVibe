@@ -37,11 +37,7 @@ const integrationSchema = new Schema(
       required: [true, 'Status is required'],
       enum: ['active', 'inactive'],
       default: 'active', // Default to active
-    },
-    created_at: {
-      type: Date,
-      default: Date.now, // Default to the current date
-    },
+    }
   },
   {
     timestamps: true, // Automatically adds `createdAt` and `updatedAt` fields

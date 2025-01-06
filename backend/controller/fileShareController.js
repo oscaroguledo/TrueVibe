@@ -1,5 +1,5 @@
 const { File } = require('../models/fileshare/fileModel');
-const { User } = require('../models/User'); // Assuming User model exists
+const { User } = require('../models/userModel'); // Assuming User model exists
 const { FileShare } = require('../models/fileshare/fileShareModel');
 const { paginate } = require('../utils/paginationUtil');  // Import pagination utility
 const { logAuditAction } = require('../utils/logAuditAction');

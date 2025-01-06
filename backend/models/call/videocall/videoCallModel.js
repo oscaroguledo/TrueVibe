@@ -41,11 +41,7 @@ const videoCallSchema = new mongoose.Schema({
     enum: ['scheduled', 'active', 'completed', 'cancelled'],  // Call status
     default: 'scheduled', // Default status is scheduled
   },
-  created_at: {
-    type: Date,
-    default: Date.now,  // Timestamp when the call record was created
-  },
-});
+}, { timestamps: true });
 
 // Mongoose model for VideoCall
 const VideoCall = mongoose.model('VideoCall', videoCallSchema);

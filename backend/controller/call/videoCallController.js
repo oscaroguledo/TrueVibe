@@ -1,8 +1,8 @@
-const { VideoCall, validateVideoCall } = require('../models/call/videoCall/videoCallModel');
-const { VideoCallParticipant, validateVideoCallParticipant } = require('../models/call/videoCall/videoCallParticipant');
-const { User } = require('../models/User');
-const { paginate } = require('../utils/paginationUtil');  // Import pagination utility
-const { logAuditAction } = require('../utils/logAuditAction');
+const { VideoCall, validateVideoCall } = require('../../models/call/videoCall/videoCallModel');
+const { VideoCallParticipant, validateVideoCallParticipant } = require('../../models/call/videoCall/videoCallParticipantsModel');
+const { User } = require('../../models/userModel');
+const { paginate } = require('../../utils/paginationUtil');  // Import pagination utility
+const { logAuditAction } = require('../../utils/logAuditAction');
 
 // Create a new video call
 const createVideoCall = async (req, res) => {

@@ -25,7 +25,7 @@ const participantSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-});
+}, { timestamps: true });
 
 const Participant = mongoose.model('Participant', participantSchema);
 

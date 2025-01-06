@@ -30,20 +30,12 @@ const channelSchema = new mongoose.Schema({
     required: true,
     ref: 'User' // FK to Users collection (owner_id)
   },
-  created_at: {
-    type: Date,
-    default: Date.now
-  },
-  updated_at: {
-    type: Date,
-    default: Date.now
-  },
   status: {
     type: String,
     enum: ['active', 'archived'],
     default: 'active'
   }
-});
+}, { timestamps: true });
 
 // Mongoose model for the channel
 const Channel = mongoose.model('Channel', channelSchema);

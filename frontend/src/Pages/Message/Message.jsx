@@ -40,13 +40,15 @@ const Message = ({socket, isMobile, isTablet,user }) => {
     const toggleRoom = (room) => {
       console.log(socket,'===')
         console.log("joining room", room.name);
-        socket?.emit("join", room.name);
+        const joindetails ={
+            chatid:room.id || room._id,
+            chatname:room.name,
+            user:user,
+            socketid:socket.id
+        }
+        socket?.emit("join-chat", joindetails);
         setCurrentRoom(room);
 
-        socket.on("join-message", (msg) => {
-            console.log("Message received", msg);
-          
-        });
     }
     
     return (

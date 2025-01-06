@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {isChannelAdmin} = require('../middleware/validateuserStatus');
+const {isChannelAdmin} = require('../middlewares/validateuserStatus');
 // Controllers
 const {
   createChannel,

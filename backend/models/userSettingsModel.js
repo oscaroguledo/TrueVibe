@@ -17,15 +17,7 @@ const userSettingsSchema = new Schema(
     setting_value: {
       type: Schema.Types.Mixed, // Mixed type to handle string, boolean, or JSON
       required: true,
-    },
-    created_at: {
-      type: Date,
-      default: Date.now,
-    },
-    updated_at: {
-      type: Date,
-      default: Date.now,
-    },
+    }
   },
   {
     timestamps: true, // Automatically adds `created_at` and `updated_at`

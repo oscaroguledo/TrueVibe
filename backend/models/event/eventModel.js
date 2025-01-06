@@ -39,14 +39,6 @@ const eventSchema = new Schema({
     ref: 'User', // User who created the event
     required: true,
   },
-  created_at: {
-    type: Date,
-    default: Date.now,
-  },
-  updated_at: {
-    type: Date,
-    default: Date.now,
-  },
   group_id: {
     type: Schema.Types.ObjectId,
     ref: 'Group', // Group involved in the event (e.g., a team or department)
@@ -62,7 +54,7 @@ const eventSchema = new Schema({
       ref: 'Participant', // Links to the Participant model
     }
   ],
-});
+}, { timestamps: true });
 
 const Event = mongoose.model('Event', eventSchema);
 

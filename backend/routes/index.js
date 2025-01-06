@@ -12,6 +12,7 @@ const notificationRoutes = require('./notificationRoutes');
 const integrationRoutes = require('./integrationRoutes');
 const userSettingsRoutes = require('./userSettingsRoutes');
 const calendarRoutes = require('./event/calenderRoutes');
+const chatRoutes = require('./chatRoutes');
 
 module.exports = (app) => {
     // declaring all the different parent paths to be used in the api
@@ -21,6 +22,7 @@ module.exports = (app) => {
     app.use("/api/v1/integrations", integrationRoutes);
     app.use("/api/v1/notifications", notificationRoutes);
     app.use("/api/v1/channels", channelRoutes);
+    app.use("/api/v1/chats", chatRoutes);
     app.use("/api/v1/messages", messageRoutes);
     // Use the group routes
     app.use('/api/v1/groups', groupRoutes);

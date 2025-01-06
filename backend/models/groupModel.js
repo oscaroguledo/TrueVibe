@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 
 // Group Schema definition
 const groupSchema = new mongoose.Schema({
-  group_id: {
+  id: {
     type: String,
     default: uuidv4, // Generate UUID for each group
     unique: true,
@@ -43,14 +43,6 @@ const groupSchema = new mongoose.Schema({
       message: 'Please provide a valid image URL (png, jpg, jpeg, gif, bmp, svg).'
     }
   },
-  created_at: {
-    type: Date,
-    default: Date.now
-  },
-  updated_at: { 
-    type: Date, 
-    default: Date.now 
-  },
   employees: [
     { 
       type: mongoose.Schema.Types.ObjectId, 
@@ -64,7 +56,7 @@ const groupSchema = new mongoose.Schema({
       required: true
     }
   ],
-});
+}, { timestamps: true });
 
 // Mongoose model for the group
 const Group = mongoose.model('Group', groupSchema);

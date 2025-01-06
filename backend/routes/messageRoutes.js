@@ -12,7 +12,8 @@ const {
   searchMessages,
   markMessageAsRead,
   getMessagesWithMentionsForUser,
-  getReactionsForMessage
+  getReactionsForMessage,
+  getMessagesByChat
 } = require('../controller/messageController');
 
 // Create a new message
@@ -20,6 +21,9 @@ router.post('/', createMessage);
 
 // Get all messages in a specific channel
 router.get('/channel/:channel_id', getMessagesByChannel);
+
+// Get all messages in a specific chat
+router.get('/chat/:chat_id', getMessagesByChat);
 
 // Get all direct messages for a user
 router.get('/user/:user_id/direct', getDirectMessagesByUser);

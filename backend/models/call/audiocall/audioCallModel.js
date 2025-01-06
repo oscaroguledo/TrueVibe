@@ -74,11 +74,7 @@ const audioCallSchema = new mongoose.Schema({
     enum: ['scheduled', 'active', 'completed', 'cancelled'],
     default: 'scheduled',
   },
-  created_at: {
-    type: Date,
-    default: Date.now, // When the call was created
-  },
-});
+}, { timestamps: true });
 
 // Mongoose model for AudioCall
 const AudioCall = mongoose.model('AudioCall', audioCallSchema);

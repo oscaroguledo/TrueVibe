@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { v4: uuidv4 } = require('uuid');
 
 // Define the Mongoose schema for task comments
 const taskCommentSchema = new mongoose.Schema({
@@ -41,7 +42,7 @@ const taskCommentSchema = new mongoose.Schema({
     type: Date,
     default: Date.now, // Timestamp of the comment
   },
-});
+}, { timestamps: true });
 
 // Mongoose model for TaskComment
 const TaskComment = mongoose.model('TaskComment', taskCommentSchema);

@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
 const { v4: uuidv4 } = require('uuid');
-const bcrypt = require('bcryptjs');
+const { hashPassword, generateSalt } = require('../utils/encryption');
 
 // Define the Mongoose schema for the user
 const userSchema = new mongoose.Schema({
-  user_id: { 
+  id: { 
     type: String, 
     default: uuidv4, // Automatically generate UUID for each new user
     unique: true 
@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
   },
   password_hash: { 
     type: String, 
-    required: true 
+    required: true,
   },
   profile_picture_url: { 
     type: String, 
@@ -58,23 +58,26 @@ const userSchema = new mongoose.Schema({
   },
   group_id: { 
     type: String, 
-    ref: 'Group' // Reference to the company this user belongs to
+    ref: 'Group' // Reference to the group this user belongs to
   },
-  created_at: { 
-    type: Date, 
-    default: Date.now 
+  internet_status: {
+    type: String,
+    enum: ['offline', 'online'], 
+    default: 'offline',
+    maxlength: 255
   },
-  updated_at: { 
-    type: Date, 
-    default: Date.now 
-  }
-});
+  
+}, { timestamps: true });
 
 // Mongoose hook to hash the password before saving it
 userSchema.pre('save', async function(next) {
   if (this.isModified('password_hash')) {
-    const salt = await bcrypt.genSalt(10);
-    this.password_hash = await bcrypt.hash(this.password_hash, salt);
+   
+    const salt = generateSalt();  // Generate a random salt
+    const hashedPassword = await hashPassword(this.password_hash, salt);  // Hash the password with the salt
+    
+    this.password_hash =hashedPassword;
+
   }
   next();
 });
@@ -115,5 +118,36 @@ const validateUser = (user) => {
 
   return schema.validate(user);
 };
+// Custom validation for PATCH requests
+const validateUserPatch = (user) => {
+  const schema = Joi.object({
+    email: Joi.string().email().optional().messages({
+      'string.email': 'Please provide a valid email.',
+    }),
+    full_name: Joi.string().min(3).optional().messages({
+      'string.min': 'Full name must be at least 3 characters long.',
+    }),
+    username: Joi.string().min(3).optional().messages({
+      'string.min': 'Username must be at least 3 characters long.',
+    }),
+    password_hash: Joi.string().min(6).optional().messages({
+      'string.min': 'Password must be at least 6 characters long.',
+    }),
+    profile_picture_url: Joi.string().uri().optional().messages({
+      'string.uri': 'Profile picture URL must be a valid URI.',
+    }),
+    status: Joi.string().valid('active', 'inactive').optional().default('active'),
+    role: Joi.string().valid('admin', 'member', 'guest').optional().default('member'),
+    timezone: Joi.string().optional().messages({
+      'any.required': 'Timezone is required.',
+    }),
+    language: Joi.string().optional().messages({
+      'any.required': 'Language is required.',
+    }),
+    group_id: Joi.string().optional() // Company reference is optional
+  }).min(1);  // Ensure that at least one field is provided for update
 
-module.exports = { User, validateUser };
+  return schema.validate(user);
+};
+
+module.exports = { User, validateUser,validateUserPatch };

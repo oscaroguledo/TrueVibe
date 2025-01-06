@@ -1,5 +1,36 @@
 const crypto = require('crypto');
 
+// Function to generate a random salt
+const generateSalt = (length = 16) => {
+  return crypto.randomBytes(length).toString('hex');  // Generate a random hex salt
+};
+
+// Function to hash a password with a salt
+// Hash password with a work factor (key stretching)
+const hashPassword = async (password, salt) => {
+    let hashed = password;  // Start with the password as the initial value
+
+    // Apply the hash workFactor number of times (key stretching)
+    const hash = crypto.createHmac('sha256', salt);  // Create SHA-256 HMAC with the salt
+    hash.update(hashed);  // Update the hash with the current password (or previous hash)
+    hashed = hash.digest('hex');  // Update hashed value for next iteration
+    const halfLength = Math.floor(hashed.length / 2);
+    
+    const password1 = hashed.slice(0,halfLength);
+    const password2 = hashed.slice((halfLength+1),hashed.length);
+    const password_hash =`${password1}.${salt}.${password2}`
+
+    return password_hash;  // Return the final hashed password after work factor rounds
+};
+const comparePassword = async (newpassword, hashedpassword)=>{
+    const [password1,salt, password2]= hashedpassword.split('.');
+    const newhashedPassword = await hashPassword(newpassword, salt);  // Hash the password with the salt
+    if (newhashedPassword === hashedpassword){
+        return true;
+    }
+    return false;
+}
+
 const generateKeyPair =()=>{
     // Generate RSA key pair
     return { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
@@ -17,8 +48,7 @@ const generateKeyPair =()=>{
 
 const encryptPayload = (payload,publicKey) => {
     // Read the public key from the file
-    const publicKey = publicKey //fs.readFileSync('public_key.pem', 'utf8');
-
+    
     // Convert the payload to a string
     const textToEncrypt = JSON.stringify(payload);
 
@@ -46,8 +76,7 @@ const encryptPayload = (payload,publicKey) => {
 
 const decryptPayload = (encryptedData,privateKey) =>{
     // Read the private key from the file
-    const privateKey = privateKey //fs.readFileSync('private_key.pem', 'utf8');
-
+    
     // Read the encrypted data from file
     const encryptedDataString = encryptedData //fs.readFileSync('encrypted_data.txt', 'utf8');
 
@@ -69,5 +98,8 @@ const decryptPayload = (encryptedData,privateKey) =>{
 module.exports = {
     generateKeyPair,
     encryptPayload,
-    decryptPayload
+    decryptPayload,
+    generateSalt,
+    hashPassword,
+    comparePassword
 };

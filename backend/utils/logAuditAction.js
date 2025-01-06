@@ -1,19 +1,25 @@
 // logAuditAction.js
-const { queue } = require('./backgroundJobQueue');
 
-// Function to add an audit log job to the queue
+const { AuditLog } = require('../models/auditLogModel');
+
+// Log audit action directly and save to the database
 const logAuditAction = async (user_id, action_type, action_description, affected_object) => {
   try {
-    await queue.add({
+    // Create a new audit log
+    const newAuditLog = new AuditLog({
       user_id,
       action_type,
       action_description,
       affected_object,
     });
-    console.log('Audit log job added to queue');
+
+    // Save the new audit log to the database
+    await newAuditLog.save();
+    console.log('Audit log saved successfully');
   } catch (err) {
-    console.error('Error adding audit log job to queue:', err);
+    console.error('Error saving audit log:', err);
   }
 };
 
 module.exports = { logAuditAction };
+

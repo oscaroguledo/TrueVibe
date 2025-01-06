@@ -8,7 +8,7 @@ import useDeviceType from './hooks/useDeviceType';
 import Message from './Pages/Message/Message';
 
 function App() {
-  const user = {id:'23131243rceve',firstname:'Oscar', lastname:'Oguledo', image:'',loggedin:true};
+  const user = {id:'23131243rceve',username:'oscar121',firstname:'Oscar', lastname:'Oguledo',email:'test@gmail.com', image:'',loggedin:true};
   const {isMobile,isTablet} =useDeviceType();
   const [currentScreen, setCurrentScreen] = useState({ icon: 'fa-user', text: 'Profiles' });
   const [socket,setSocket] = useState(null);
@@ -26,8 +26,8 @@ function App() {
   useEffect(() => {
     const socket = io("ws://localhost:8080");
     setSocket(socket);
-    socket?.on("connect", () => {
-      console.log("Connected to socket server");
+    socket?.on("connection", (data) => {
+      console.log(data,"Connected to socket server");
       // setName(`anon-${socket.id}`);
       
     });

@@ -64,15 +64,7 @@ const taskSchema = new mongoose.Schema({
     enum: ['low', 'medium', 'high'],
     default: 'medium', // Default priority is 'medium'
   },
-  created_at: {
-    type: Date,
-    default: Date.now, // When the task was created
-  },
-  updated_at: {
-    type: Date,
-    default: null, // Will be set to the current date when updated
-  },
-});
+}, { timestamps: true });
 
 // Mongoose model for Task
 const Task = mongoose.model('Task', taskSchema);

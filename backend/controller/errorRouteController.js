@@ -1,4 +1,4 @@
-const { generateDefaultResponseObject } = require("../utils/defaultResponseObject");
+const { generateDefaultResponseObject } = require("../utils/defaultResponseObject").default;
 
 // 404 controller handler
 exports.handle_404_requests = (req, res, next) => {

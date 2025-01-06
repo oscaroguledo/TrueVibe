@@ -1,8 +1,8 @@
-const { AudioCall } = require('../models/call/audioCall/audioCallModel');
-const { AudioCallParticipant } = require('../models/call/audioCall/audioCallParticipant');
-const { User } = require('../models/userModel');
-const { paginate } = require('../utils/paginationUtil');  // Import pagination utility
-const { logAuditAction } = require('../utils/logAuditAction');
+const { AudioCall } = require('../../models/call/audioCall/audioCallModel');
+const { AudioCallParticipant } = require('../../models/call/audioCall/audioCallParticipantsModel');
+const { User } = require('../../models/userModel');
+const { paginate } = require('../../utils/paginationUtil');  // Import pagination utility
+const { logAuditAction } = require('../../utils/logAuditAction');
 
 // Create a new audio call
 const createAudioCall = async (req, res) => {

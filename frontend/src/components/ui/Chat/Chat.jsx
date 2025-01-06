@@ -48,11 +48,11 @@ const Chat = ({ currentRoom, socket, user,isMobile,color, backgroundColor }) => 
               });
           };
       
-          socket.on("message", handleMessage);
+          socket.on("new-message", handleMessage);
       
           // Cleanup the listener on component unmount
           return () => {
-              socket.off("message", handleMessage);
+              socket.off("new-message", handleMessage);
           };
       }
     }, [messageSent, socket]); // Dependency on messageSent
@@ -71,7 +71,7 @@ const Chat = ({ currentRoom, socket, user,isMobile,color, backgroundColor }) => 
             date: `${new Date()}`
           };
         
-        socket?.emit("message", newMessage);
+        socket?.emit("incoming-message", newMessage);
         // console.log('=====',newMessage)
         
         // Update the message list safely with functional setState
@@ -186,7 +186,7 @@ const Chat = ({ currentRoom, socket, user,isMobile,color, backgroundColor }) => 
                   <div className="chat-title-users">
                     {currentRoom.members?
                       <>
-                        <span className="chat-title-users-images">
+                        {/* <span className="chat-title-users-images">
                             {currentRoom.members?.slice(0,2).map((member, index)=>(
                               <Avatar 
                                   key={index} 
@@ -200,7 +200,7 @@ const Chat = ({ currentRoom, socket, user,isMobile,color, backgroundColor }) => 
                                     textTransform: 'uppercase',}}
                               />
                             ))}
-                        </span>
+                        </span> */}
                         <small className="chat-title-users-members">
                             <span>{currentRoom?.members?.length||0} members</span>
                               {currentRoom?.members?.length > 0 ?

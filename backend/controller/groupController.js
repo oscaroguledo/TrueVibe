@@ -1,5 +1,5 @@
 const { Group, validateGroup } = require('../models/groupModel');
-const { generateDefaultResponseObject } = require("../utils/defaultResponseObject");
+const { generateDefaultResponseObject } = require("../utils/defaultResponseObject").default;
 const User = require('../models/userModel'); // Assuming user model exists
 const { paginate } = require('../utils/paginationUtil');  // Import pagination utility
 const { logAuditAction } = require('../utils/logAuditAction');

@@ -1,9 +1,10 @@
-const { Message } = require('../models/Message');
-const { User } = require('../models/User');
-const { Channel } = require('../models/Channel');
-const { ChannelMember } = require('../models/ChannelMember');
+const { Message } = require('../models/messageModel');
+const { User } = require('../models/userModel');
+const { Channel } = require('../models/channel/channelModel');
+const { ChannelMember } = require('../models/channel/channelMember');
 const { paginate } = require('../utils/paginationUtil');  // Import pagination utility
 const { logAuditAction } = require('../utils/logAuditAction');
+const Chat = require('../models/chatModel');
 
 // 1. Create a New Message
 const createMessage = async (req, res) => {
@@ -72,7 +73,28 @@ const getMessagesByChannel = async (req, res) => {
     // Use the paginate utility to fetch paginated messages for the channel
     const { data: messages, pagination } = await paginate(Message, { channel_id }, page, limit, { timestamp: 1 });
 
-    if (messages.length === 0) return res.status(404).json({ message: 'No messages found for this channel' });
+    return res.status(200).json({
+      messages,
+      pagination,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Server error' });
+  }
+};
+// 2. Get All Messages in a Chat
+// Get all messages in a chat with pagination
+const getMessagesByChat = async (req, res) => {
+  try {
+    const { chat_id } = req.params;
+    const { page = 1, limit = 10 } = req.query; // Pagination parameters (default: page 1, limit 10)
+
+    // Validate the chat
+    const chat = await Chat.findOne({ chat_id });
+    if (!chat) return res.status(404).json({ message: 'Chat not found' });
+
+    // Use the paginate utility to fetch paginated messages for the channel
+    const { data: messages, pagination } = await paginate(Message, { chat_id }, page, limit, { timestamp: 1 });
 
     return res.status(200).json({
       messages,
@@ -349,6 +371,7 @@ const getReactionsForMessage = async (req, res) => {
 module.exports = {
   createMessage,
   getMessagesByChannel,
+  getMessagesByChat,
   getDirectMessagesByUser,
   getMessageById,
   updateMessage,

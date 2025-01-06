@@ -10,7 +10,7 @@ const {
   getAudioCallParticipants,
   removeParticipantFromAudioCall,
 } = require('../../controller/call/audioCallController');
-const { authenticateUser, authorizeUser } = require('../middleware/validateuserStatus');
+const { authenticateUser, authorizeUser } = require('../../middlewares/validateuserStatus');
 
 // Create a new audio call
 router.post('/', authenticateUser, createAudioCall);

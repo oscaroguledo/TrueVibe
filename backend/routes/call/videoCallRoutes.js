@@ -10,7 +10,7 @@ const {
   getAllParticipants,
   removeParticipantFromVideoCall
 } = require('../../controller/call/videoCallController');
-const { authenticateUser, authorizeUser } = require('../middleware/validateuserStatus');
+const { authenticateUser, authorizeUser } = require('../../middlewares/validateuserStatus');
 
 // Create a new video call
 router.post('/', authenticateUser, createVideoCall);

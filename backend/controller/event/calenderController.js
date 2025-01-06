@@ -1,7 +1,7 @@
-const CalendarEvent = require('../models/event/calendarEventModel');
-const Participant = require('../models/event/participantModel');
-const { User } = require('../models/userModel');
-const { logAuditAction } = require('../utils/logAuditAction'); // Import the updated logAuditAction
+const CalendarEvent = require('../../models/event/calenderEventModel');
+const Participant = require('../../models/event/participantModel');
+const { User } = require('../../models/userModel');
+const { logAuditAction } = require('../../utils/logAuditAction'); // Import the updated logAuditAction
 
 // Create a new calendar event
 const createCalendarEvent = async (req, res) => {

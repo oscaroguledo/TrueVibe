@@ -5,12 +5,11 @@ const express = require("express");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 const { connectToDb } = require("./config/db");
-const { addmessage } = require("./controller/messageController");
-const adminInit = require("./utils/admin.kafka");
-const { callProducer, producerRun, consumerRun } = require("./utils/kafka");
+// const adminInit = require("./utils/admin.kafka");
+// const { callProducer, producerRun, consumerRun } = require("./utils/kafka");
 const TOPICS = JSON.parse(process.env.KAFKA_TOPIC);
 
-const PORT = 5000;
+const PORT = 8080;
 // creating a new express application
 const app = express();
 
@@ -19,6 +18,7 @@ let allowedOrigins = [];
 try {
   allowedOrigins = JSON.parse(process.env.FRONTEND_URLS);
 } catch (error) {
+  console.log(error)
   console.log(
     "Error parsing the 'FRONTEND_URLS' variable stored in your .env file. Please make sure it is in this format: ",
     '["valid_url_1", "valid_url_2"]'
@@ -42,8 +42,8 @@ const io = new Server(httpServer, {
 function startServer() {
   httpServer.listen(PORT, async () => {
     console.log(`Server running on port ${PORT}`);
-    await adminInit(TOPICS);
-    await consumerRun("realtime-messages", TOPICS);
+    // await adminInit(TOPICS);
+    // await consumerRun("realtime-messages", TOPICS);
 
     // testing the producer-----
     // const message = {
@@ -59,56 +59,23 @@ function startServer() {
 
     // listening when a client connects to our socket instance
     io.on("connection", (socket) => {
-      console.log("⚡connected with: ", socket.id);
+      console.log("⚡"+" connected with: ", socket.id);
+      socket.emit("connection",socket.id);
 
       // join event
-      socket.on(
-        "join-event",
-        (eventId, userPeerId, userEmail, nameOfUser, userSocketId) => {
-          console.log(
-            nameOfUser +
-              " with email '" +
-              userEmail +
-              "' and peer id: '" +
-              userPeerId +
-              "' joined event: " +
-              eventId
-          );
-          socket.join(eventId);
+      socket.on("join-chat",joindetails => {
+          // console.log(joindetails);
+          chatId  = joindetails.chatid;
+          socket.join(chatId);
 
-          const newPeerForEvent = {
-            peerId: userPeerId,
-            email: userEmail,
-            nameOfUser,
-            socketId: userSocketId,
-          };
 
-          if (eventDictForPeerIds[eventId]) {
-            if (
-              !eventDictForPeerIds[eventId]?.find(
-                (item) => item.peerId === userPeerId || item.email === userEmail
-              )
-            )
-              eventDictForPeerIds[eventId]?.push(newPeerForEvent);
-          } else {
-            eventDictForPeerIds[eventId] = [newPeerForEvent];
-          }
+          // io.to(socket.id).emit(
+          //   "current-connected-users",
+          //   eventDictForPeerIds[eventId]
+          // );
 
-          io.to(socket.id).emit(
-            "current-connected-users",
-            eventDictForPeerIds[eventId]
-          );
-
-          socket.broadcast
-            .to(eventId)
-            .emit(
-              "user-connected",
-              userPeerId,
-              userEmail,
-              nameOfUser,
-              userSocketId
-            );
-
+          socket.broadcast.to(chatId).emit("join-chat",joindetails.user.username);
+          console.log(joindetails.user.username,'just joined the chat: ',{chatId,chatname:joindetails.chatname})
           socket.on("disconnect", async (reason) => {
             console.log(
               "🔥 User with socket id disconnected: '" +
@@ -160,24 +127,24 @@ function startServer() {
         // io.to(data.eventId).emit('new-message', data.eventId, data.username, data.email, data.isProctor, data.message, new Date());
 
         // save in the background
-        try {
-          const participant = await Participant.find({
-            event_id: data.eventId,
-          });
-          const message = {
-            eventId: data.eventId,
-            useremail: data.email,
-            username: data.username,
-            message: data.message,
-            tagged: participant
-              .filter((i) => data.message.includes("@" + i._id))
-              .map((i) => i._id),
-          };
-          console.log(message, "============================");
-          await producerRun("MESSAGES", message);
-        } catch (error) {
-          console.log("\x1b[31m%s\x1b[0m", "error catching message", error);
-        }
+        // try {
+        //   const participant = await Participant.find({
+        //     event_id: data.eventId,
+        //   });
+        //   const message = {
+        //     eventId: data.eventId,
+        //     useremail: data.email,
+        //     username: data.username,
+        //     message: data.message,
+        //     tagged: participant
+        //       .filter((i) => data.message.includes("@" + i._id))
+        //       .map((i) => i._id),
+        //   };
+        //   console.log(message, "============================");
+        //   await producerRun("MESSAGES", message);
+        // } catch (error) {
+        //   console.log("\x1b[31m%s\x1b[0m", "error catching message", error);
+        // }
       });
 
       // Listen for typing activity

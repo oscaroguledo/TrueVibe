@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 
 // Define the Mongoose schema for notifications
 const notificationSchema = new mongoose.Schema({
-  notification_id: {
+  id: {
     type: String,
     default: uuidv4, // Auto-generate UUID for each notification
     unique: true,
@@ -26,11 +26,7 @@ const notificationSchema = new mongoose.Schema({
     type: Boolean,
     default: false, // Initially set to false (notification unread)
   },
-  created_at: {
-    type: Date,
-    default: Date.now, // The timestamp when the notification was created
-  },
-});
+}, { timestamps: true });
 
 // Mongoose model for Notification
 const Notification = mongoose.model('Notification', notificationSchema);

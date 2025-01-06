@@ -1,8 +1,9 @@
 const { Channel,validateChannel } = require('../models/channel/channelModel');
-const { User } = require('../models/User');
-const { Group } = require('../models/Group');
+const { User } = require('../models/userModel');
+const { Group } = require('../models/groupModel');
 const { ChannelMember,validateChannelMember } = require('../models/channel/channelMember');
 const { logAuditAction } = require('../utils/logAuditAction');
+const { paginate } = require('../utils/paginationUtil');
 
 
 const createChannel = async (req, res) => {

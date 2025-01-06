@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 // Audit Log Schema
 const auditLogSchema = new Schema(
   {
-    user_id: {
+    _id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User', // Reference to the User model
       required: true,

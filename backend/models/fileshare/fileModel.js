@@ -44,7 +44,7 @@ const fileSchema = new mongoose.Schema({
     enum: ['public', 'private', 'restricted'], // Privacy levels
     default: 'private',
   },
-});
+}, { timestamps: true });
 
 // Mongoose model for File
 const File = mongoose.model('File', fileSchema);
